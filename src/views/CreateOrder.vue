@@ -1,0 +1,164 @@
+<template>
+  <div class="cart">
+    <div class="cart-header">
+      <div>1.確認購買清單</div>
+      <div class="active">2.填寫收件資訊</div>
+      <div>3.完成訂單!</div>
+    </div>
+    <h1>購物車清單</h1>
+    <div class="cart-information">
+      <div class="cart-item">
+        <div class="cart-item__name">商品</div>
+        <div class="cart-item__quantity">數量</div>
+        <div class="cart-item__price">單價</div>
+        <div class="cart-item__total">小計</div>
+      </div>
+      <Cart v-for="item in cart" :product="item" :key="item.id" />
+      <div class="cart-item total-price">總計金額 ${{totalPrice}}</div>
+    </div>
+    <h1>請填寫收件資訊</h1>
+    <form @submit.prevent="checkout" autocomplete="off" method="post">
+      <div class="form-group">
+        <label for="useremail">Email</label>
+        <input
+          type="email"
+          id="useremail"
+          name="email"
+          placeholder="請輸入Email"
+          required="true"
+          v-model="form.email"
+        />
+        <label v-show="form.email">{{emailError}}</label>
+      </div>
+      <div class="form-group">
+        <label for="username">收件人姓名</label>
+        <input
+          type="text"
+          id="username"
+          name="name"
+          placeholder="輸入姓名"
+          required="true"
+          v-model="form.username"
+        />
+      </div>
+      <div class="form-group">
+        <label for="usertel">收件人電話</label>
+        <input
+          type="tel"
+          name
+          id="usertel"
+          placeholder="請輸入電話"
+          required="true"
+          v-model="form.usertel"
+        />
+      </div>
+      <div class="form-group">
+        <label for="useraddress">收件人地址</label>
+        <input
+          type="address"
+          id="useraddress"
+          placeholder="請輸入地址"
+          required="true"
+          v-model="form.useraddress"
+        />
+      </div>
+      <div class="form-group">
+        <label for="message">留言</label>
+        <textarea name="message" id="message"
+        cols="30" rows="10"
+         v-model="form.message"></textarea>
+      </div>
+      <input style="display:none" type="submit" value="送出表單" ref="button" />
+    </form>
+    <div class="cart-action">
+      <router-link to="/">
+        <button class="step__normal">&lt;&lt; 繼續購物</button>
+      </router-link>
+      <div>
+        <router-link to="/cart">
+          <button class="step__blue">上一步</button>
+        </router-link>
+        <button @click="handleSubmit" class="step__danger">下一步：完成訂單</button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Cart from "../components/Cart";
+export default {
+  name: "order",
+  components: { Cart },
+  data() {
+    return {
+      reg: /^.*?@[a-z]+\.[a-z]+/
+    };
+  },
+  computed: {
+    form() {
+      return this.$store.state.form;
+    },
+    cart() {
+      return this.$store.state.cart;
+    },
+    emailError() {
+      return this.form.email === ""
+        ? ""
+        : this.reg.test(this.form.email)
+        ? ""
+        : "請輸入正確的Email格式";
+    },
+    totalPrice() {
+      return this.cart.reduce(
+        (total, item) => total + item.quantity * item.price,
+        0
+      );
+    }
+  },
+  methods: {
+    checkout() {
+      const orders = this.$store.state.orders;
+      function uid() {
+        return Math.random()
+          .toString(36)
+          .substring(2);
+      }
+      const id = uid() + uid();
+      const date = new Date().toLocaleString();
+
+      orders.push({ id, 
+      date, 
+      cart: [...this.cart], 
+      form: { ...this.form } });
+
+      this.$store.state.cart = [];
+      this.$store.state.form = {};
+      console.log(this.$store.state);
+      this.$router.push("/checkout/" + id);
+    },
+    handleSubmit() {
+      this.$refs.button.click();
+    }
+  },
+  mounted() {
+    if (this.$store.state.cart.length == 0) {
+      this.$router.push("/");
+    }
+  }
+};
+</script>
+
+<style lang="scss">
+.order {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.step__danger {
+  background: rgb(255, 0, 0);
+  &:hover {
+    background: rgb(173, 0, 0);
+  }
+}
+</style>

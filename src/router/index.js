@@ -1,27 +1,104 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-
-Vue.use(VueRouter)
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "../views/Home.vue";
+import store from "../store/index";
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
+    path: "/",
+    name: "home",
     component: Home
   },
   {
-    path: '/about',
-    name: 'about',
+    path: "/cart",
+    name: "cart",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/CartPage.vue")
+  },
+  {
+    path: "/createorder",
+    name: "createorder",
+    component: () => import("../views/CreateOrder.vue")
+  },
+  {
+    path: "/checkout/:id",
+    name: "checkout",
+    component: () => import("../views/Checkout.vue")
+  },
+  {
+    path: "/product-detail/:id",
+    name: "prduct-detail",
+    component: () => import("../views/ProductDetail.vue")
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: () => import("../views/Login.vue")
+  },
+  {
+    path: "/dashboard",
+    component: () => import("../views/Dashboard.vue"),
+    children: [
+      {
+        path: "",
+        name: "dashboard",
+        component: () => import("../views/Dashboard/Index.vue"),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: "products",
+        name: "products",
+        component: () => import("../views/Dashboard/Products.vue"),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: "new",
+        name: "new",
+        component: () => import("../views/Dashboard/New.vue"),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: "edit/:id",
+        name: "edit",
+        component: () => import("../views/Dashboard/EditProduct.vue"),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: "orders",
+        name: "orders",
+        component: () => import("../views/Dashboard/Orders.vue"),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: "order/:id",
+        name: "order",
+        component: () => import("../views/Dashboard/EditOrder.vue"),
+        meta: { requiresAuth: true }
+      }
+    ]
   }
-]
+];
 
 const router = new VueRouter({
+  scrollBehavior() {
+    return { x: 0, y: 0 };
+  },
   routes
-})
-
-export default router
+});
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    if (store.state.logining) {
+      next();
+    } else {
+      console.log("需先登入");
+      next({ path: "/login" });
+    }
+  } else {
+    next();
+  }
+});
+export default router;
