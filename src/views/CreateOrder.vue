@@ -133,7 +133,6 @@ export default {
 
       this.$store.state.cart = [];
       this.$store.state.form = {};
-      console.log(this.$store.state);
       this.$router.push("/checkout/" + id);
     },
     handleSubmit() {

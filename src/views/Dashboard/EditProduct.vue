@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import axios from "axios"
+
 export default {
   data() {
     return {
@@ -67,7 +69,7 @@ export default {
   computed: {
     product() {
       return this.$store.state.products.find(
-        item => item.id == this.$route.params.id
+        item => item._id == this.$route.params.id
       );
     }
   },
@@ -87,21 +89,36 @@ export default {
       }
     },
     handleSubmit() {
-      this.product.name = this.name;
+      /*this.product.name = this.name;
       this.product.price = this.price;
+      this.product.remaining =this.remaining
       this.product.src = this.src;
-      this.product.type = this.type;
-      this.showUpdate = true;
+      this.product.type = this.type;*/
+      axios.patch(process.env.VUE_APP_URL+ this.product._id,{
+          name:this.name,
+          price:this.price,
+          remaining:this.remaining,
+          src:this.src,
+          type:this.type
+        })
+        .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+        this.showUpdate = true;
       setTimeout(() => {
         this.showUpdate = false;
         this.$router.push("/dashboard/products");
       }, 1000);
     },
     handleDelete() {
-      this.$store.state.products.splice(
+      /*this.$store.state.products.splice(
         this.$store.state.products.indexOf(this.product),
         1
-      );
+      );*/
+      alert("不開放刪除功能")
       this.$router.push("/dashboard/products");
     }
   }

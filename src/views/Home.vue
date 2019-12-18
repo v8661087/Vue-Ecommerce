@@ -17,7 +17,7 @@
       <Product
         v-for="product in filteredProducts"
         :product="product"
-        :key="product.id"
+        :key="product._id"
         @add="handleAdd(product)"
       />
     </div>

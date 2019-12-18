@@ -94,7 +94,6 @@ router.beforeEach((to, from, next) => {
     if (store.state.logining) {
       next();
     } else {
-      console.log("需先登入");
       next({ path: "/login" });
     }
   } else {

@@ -76,7 +76,7 @@ export default new Vuex.Store({
           "https://tw.portal-pokemon.com/play/resources/pokedex/img/pm/2b3f6ff00db7a1efae21d85cfb8995eaff2da8d8.png"
       }
     ],
-    products: [
+    products: [/*
       {
         id: 1,
         name: "皮卡丘",
@@ -166,7 +166,7 @@ export default new Vuex.Store({
         type: "水",
         src:
           "https://tw.portal-pokemon.com/play/resources/pokedex/img/pm/3755f6d1176c7f8c64f663dae13ef9f1406d007a.png"
-      }
+      }*/
     ]
   },
   mutations: {

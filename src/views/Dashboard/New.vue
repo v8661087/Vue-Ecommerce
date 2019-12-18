@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import axios from "axios"
 export default {
     data(){
         return {
@@ -83,7 +84,7 @@ export default {
             }
         },
         handleSubmit(){
-          const products =  this.$store.state.products
+          /*const products =  this.$store.state.products
           products.push({
             id:products.length+1,
             name:this.name,
@@ -92,6 +93,14 @@ export default {
             remaining:this.remaining,
             type:this.type,
             src:this.src,
+            })*/
+            axios.post("https://guarded-garden-48374.herokuapp.com/products/",{
+                name:this.name,
+                price:this.price,
+                quantity:1,
+                remaining:this.remaining,
+                type:this.type,
+                src:this.src,
             })
             this.showAdd = true
             setTimeout(()=>{

@@ -34,7 +34,7 @@ export default {
   computed: {
     product() {
       return this.$store.state.products.find(
-        product => product.id == this.$route.params.id
+        product => product._id == this.$route.params.id
       );
     }
   },

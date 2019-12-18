@@ -18,7 +18,7 @@
                 <td>{{product.remaining}}</td>
                 <td>{{product.type}}</td>
                 <td>
-                    <router-link :to="{path:'/dashboard/edit/'+product.id}">edit</router-link>
+                    <router-link :to="{path:'/dashboard/edit/'+ product._id}">edit</router-link>
                     </td>
             </tr>
         </tbody>

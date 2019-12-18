@@ -15,6 +15,8 @@
   </div>
 </template>
 <script>
+import axios from "axios"
+import store from "./store"
 export default {
   name:"app",
   computed:{
@@ -27,7 +29,25 @@ export default {
       this.$store.state.logining = false
       this.$router.push("/login")
     }
-  }
+  },
+  beforeCreate(){
+    axios
+      .get(process.env.VUE_APP_URL)
+      .then(response=>{
+        //console.log(response.data,"fetch.data")
+        store.state.products = response.data
+        //console.log(store.state.products,"store.state.products")
+        })
+      .catch(error=>console.log(error))
+  },
+  updated(){
+    axios
+      .get(process.env.VUE_APP_URL)
+      .then(response=>{
+        store.state.products = response.data
+        })
+      .catch(error=>console.log(error))
+  },
 }
 </script>
 <style lang="scss">
