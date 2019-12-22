@@ -58,7 +58,7 @@ export default {
   components:{},
   computed: {
     cart() {
-      return this.$store.getters.data.cart;
+      return this.$store.state.cart;
     },
     totalPrice() {
       return this.cart.reduce(
@@ -76,7 +76,4 @@ export default {
 </script>
 
 <style lang="scss">
-  h1{
-    margin-bottom:0
-  }
 </style>

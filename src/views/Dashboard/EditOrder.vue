@@ -9,7 +9,7 @@
         <div class="cart-item__price">單價</div>
         <div class="cart-item__total">小計</div>
       </div>
-      <Cart v-for="item in cart" :product="item" :key="item.id" />
+      <Cart v-for="item in cart" :product="item" :key="item._id" />
       <div class="cart-item total-price">總計金額 ${{totalPrice}}</div>
     </div>
     <Form :form="form" :paymentStatus="order.paymentStatus" />
@@ -42,7 +42,7 @@ export default {
     form() {
       return this.order.form;
     }
-  }
+  },
 };
 </script>
 

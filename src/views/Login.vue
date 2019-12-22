@@ -36,7 +36,7 @@ export default {
           this.$store.state.logining = true;
           this.loading = false
           this.$router.push("/dashboard");
-        }, 1000);
+        }, 500);
       }
     }
   },
@@ -45,7 +45,7 @@ export default {
       return this.$store.state.accounts;
     }
   },
-  created(){
+  mounted(){
     if(this.$store.state.logining){
       this.$router.push("/")
     }
@@ -54,24 +54,4 @@ export default {
 </script>
 
 <style lang='scss'>
-.loading {
-  width: 90px;
-  height: 90px;
-  position: absolute;
-  left: 45%;
-  top: 39%;
-  border: 3px solid #3a3;
-  border-right: 3px solid #fff;
-  border-bottom: 3px solid #fff;
-  border-radius: 50%;
-  animation: loading 1s infinite linear;
-}
-@keyframes loading {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 </style>

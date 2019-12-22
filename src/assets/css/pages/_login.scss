@@ -1,0 +1,20 @@
+.loading {
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    left: 45%;
+    top: 39%;
+    border: 3px solid #3a3;
+    border-right: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+    border-radius: 50%;
+    animation: loading 1s infinite linear;
+  }
+  @keyframes loading {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }

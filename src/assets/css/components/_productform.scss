@@ -1,0 +1,24 @@
+form {
+    max-width: 330px;
+    margin: 9px auto;
+  }
+  .form-group {
+    margin-bottom: 15px;
+    text-align: left;
+    > label {
+      display: block;
+      text-align: left;
+      margin-bottom: 9px;
+    }
+    > input,
+    textarea {
+      width: 100%;
+      color:white;
+      font-size: 18px;
+      border: 1px solid gray;
+      padding: 12px 18px;
+      outline: none;
+      background: #17181c;
+      box-sizing: border-box;
+    }
+  }

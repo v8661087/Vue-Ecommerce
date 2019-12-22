@@ -17,7 +17,7 @@
       <div class="cart-item total-price">總計金額 ${{totalPrice}}</div>
     </div>
     <h1>請填寫收件資訊</h1>
-    <form @submit.prevent="checkout" autocomplete="off" method="post">
+    <form @submit.prevent="checkout">
       <div class="form-group">
         <label for="useremail">Email</label>
         <input
@@ -27,6 +27,7 @@
           placeholder="請輸入Email"
           required="true"
           v-model="form.email"
+          ref="emailInput"
         />
         <label v-show="form.email">{{emailError}}</label>
       </div>
@@ -81,17 +82,20 @@
         <button @click="handleSubmit" class="step__danger">下一步：完成訂單</button>
       </div>
     </div>
+    <div class="modal" v-show="showSuccess">訂單完成!</div>
   </div>
 </template>
 
 <script>
 import Cart from "../components/Cart";
+import axios from "axios"
 export default {
   name: "order",
   components: { Cart },
   data() {
     return {
-      reg: /^.*?@[a-z]+\.[a-z]+/
+      reg: /^.*?@[a-z]+\.[a-z]+/,
+      showSuccess:false
     };
   },
   computed: {
@@ -102,7 +106,7 @@ export default {
       return this.$store.state.cart;
     },
     emailError() {
-      return this.form.email === ""
+      return this.form.email == ""
         ? ""
         : this.reg.test(this.form.email)
         ? ""
@@ -117,7 +121,6 @@ export default {
   },
   methods: {
     checkout() {
-      const orders = this.$store.state.orders;
       function uid() {
         return Math.random()
           .toString(36)
@@ -125,18 +128,29 @@ export default {
       }
       const id = uid() + uid();
       const date = new Date().toLocaleString();
-
-      orders.push({ id, 
+      axios.post(process.env.VUE_APP_ORDERS_URL,{
+        id, 
       date, 
       cart: [...this.cart], 
-      form: { ...this.form } });
-
-      this.$store.state.cart = [];
-      this.$store.state.form = {};
-      this.$router.push("/checkout/" + id);
+      form: { ...this.form },
+      paymentStatus:false }
+      )
+      this.showSuccess= true
+      setTimeout(()=>{
+        this.$router.push("/checkout/" + id)
+        this.showSuccess= false
+        this.$store.state.cart = [];
+        localStorage.setItem("cart",JSON.stringify(this.$store.state.cart))
+        this.$store.state.form = {};
+        }
+      ,1000)
     },
     handleSubmit() {
-      this.$refs.button.click();
+      if(this.emailError){
+        this.$refs.emailInput.focus()
+      }else{
+        this.$refs.button.click();
+      }
     }
   },
   mounted() {
@@ -148,16 +162,4 @@ export default {
 </script>
 
 <style lang="scss">
-.order {
-  max-width: 900px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.step__danger {
-  background: rgb(255, 0, 0);
-  &:hover {
-    background: rgb(173, 0, 0);
-  }
-}
 </style>

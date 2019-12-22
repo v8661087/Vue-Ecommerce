@@ -15,13 +15,4 @@ export default {
 </script>
 
 <style>
-.list-type {
-  cursor: pointer;
-  list-style-type: none;
-  margin: 9px;
-  border: 1px solid gray;
-  border-radius: 50px;
-  padding: 9px 15px;
-  text-align: center;
-}
 </style>

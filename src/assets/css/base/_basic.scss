@@ -1,0 +1,114 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background: #17181c;
+  color: white;
+}
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+  color: white;
+}
+#app {
+  min-height: 100vh;
+  position: relative;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+input[type="submit"] {
+  color: white;
+  width: 100%;
+  background: #167bff;
+  border: none;
+  outline: none;
+  padding: 9px 18px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button {
+  font-size: 18px;
+  border: 1px solid gray;
+  padding: 12px 18px;
+  margin: 3px;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+  background: none;
+  color: white;
+  &:hover {
+    background: gray;
+    color: white;
+  }
+}
+.total-price {
+  justify-content: flex-end;
+  padding-right: 33px;
+}
+.step {
+  &__normal {
+    color: rgb(0, 195, 255);
+    border-color: rgb(0, 134, 196);
+    &:hover {
+      color: white;
+      background: rgb(0, 134, 196);
+    }
+  }
+  &__blue {
+    border: none;
+    background: rgb(0, 134, 196);
+    &:hover {
+      background: rgb(0, 112, 163);
+    }
+  }
+}
+.step__danger {
+  background: rgb(255, 0, 0);
+  &:hover {
+    background: rgb(173, 0, 0);
+  }
+}
+.modal {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  width: 330px;
+  height: 219px;
+  background: #17181c;
+  border: 1px solid gray;
+  margin-left: -165px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  > button{
+    width: 45%;
+    border-radius: 0;
+  }
+}
+.dashboard__action {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  img {
+    width: 45vw;
+    height: 45vw;
+  }
+}
+
+.delete {
+  cursor: pointer;
+  &:hover {
+    color: red;
+  }
+}

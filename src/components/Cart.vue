@@ -1,9 +1,7 @@
 <template>
   <div class="cart-item">
     <div class="cart-item__name">
-      <div>
-        <img :src="product.src" :alt="product.name" />
-      </div>
+      <img :src="product.src" :alt="product.name" />
       <div>{{product.name}}</div>
     </div>
     <div class="cart-item__quantity">{{product.quantity}}</div>
