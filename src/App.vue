@@ -27,7 +27,6 @@ export default {
         .then(response => {
           store.state.products = response.data;
         })
-        .catch(error => console.log(error));
     },
     fetchOrders() {
       axios
@@ -35,7 +34,6 @@ export default {
         .then(response => {
           store.state.orders = response.data;
         })
-        .catch(error => console.log(error));
     }
   },
   mounted() {
