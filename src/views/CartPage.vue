@@ -20,9 +20,7 @@
             <span @click="handleDelete(product)">x</span>
             </div>
           <div class="cart-item__name">
-            <div>
               <img :src="product.src" :alt="product.name" />
-            </div>
             <div>{{product.name}}</div>
           </div>
           <div class="cart-item__quantity">{{product.quantity}}</div>

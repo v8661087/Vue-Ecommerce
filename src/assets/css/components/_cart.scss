@@ -64,3 +64,10 @@
       justify-content: space-between;
     }
   }
+  @media (max-width:500px){
+    .cart-item__name{
+     img{
+       width: 60px;
+     }
+    }
+  }

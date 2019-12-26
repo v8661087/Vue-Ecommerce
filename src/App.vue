@@ -55,6 +55,7 @@ export default {
   background-position: right;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  background-size: cover;
   padding: 69px 0;
   text-align: center;
 }
