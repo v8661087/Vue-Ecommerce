@@ -13,7 +13,7 @@
         />
       </ul>
     </div>
-    <div v-show="!products" class="loading"></div>
+    <div v-show="!products.length" class="loading"></div>
     <div class="products">
       <Product
         v-for="product in filteredProducts"

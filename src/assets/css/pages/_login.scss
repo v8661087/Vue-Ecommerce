@@ -1,9 +1,11 @@
 .loading {
     width: 90px;
     height: 90px;
-    position: absolute;
-    left: 45%;
-    top: 39%;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-top: -45px;
+    margin-left: -45px;
     border: 3px solid #3a3;
     border-right: 3px solid #fff;
     border-bottom: 3px solid #fff;
