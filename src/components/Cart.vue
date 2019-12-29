@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: "cart",
+  name: "Cart",
   props: { product: Object }
 };
 </script>

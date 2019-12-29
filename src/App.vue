@@ -2,19 +2,17 @@
   <div id="app">
     <Navbar :logining="logining" :cart="cart" />
     <router-view class="container" />
-    <Footer />
+    <TheFooter />
   </div>
 </template>
 <script>
 import "@/assets/css/app.scss";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import axios from "axios";
-import store from "./store";
+import TheFooter from "@/components/TheFooter";
 import {mapState} from "vuex"
 export default {
   name: "app",
-  components: { Navbar, Footer },
+  components: { Navbar, TheFooter },
   computed:mapState(["cart","logining"]),
   methods: {
     fetchData() {
@@ -22,18 +20,10 @@ export default {
       this.fetchOrders();
     },
     fetchProducts() {
-      axios
-        .get(process.env.VUE_APP_PRODUCTS_URL)
-        .then(response => {
-          store.state.products = response.data;
-        })
+      this.$store.dispatch("getProducts",process.env.VUE_APP_PRODUCTS_URL)
     },
     fetchOrders() {
-      axios
-        .get(process.env.VUE_APP_ORDERS_URL)
-        .then(response => {
-          store.state.orders = response.data;
-        })
+      this.$store.dispatch("getOrders",process.env.VUE_APP_ORDERS_URL)
     }
   },
   mounted() {

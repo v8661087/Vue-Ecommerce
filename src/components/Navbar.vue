@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "navber",
+  name: "Navber",
   props: { logining: Boolean, cart: Array },
   methods: {
     logout() {

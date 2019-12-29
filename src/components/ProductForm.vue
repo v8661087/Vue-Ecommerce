@@ -40,7 +40,7 @@
 
 <script>
 export default {
-  name: "productForm",
+  name: "ProductForm",
   props: {
     name: String,
     price: { type: [String, Number] },

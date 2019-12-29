@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "list",
+  name: "List",
   props: { list: String },
   methods: {
     handleActive() {

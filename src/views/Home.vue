@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <div class="list">
-      <h4>條件篩選</h4>
       <span>屬性</span>
       <ul>
         <List

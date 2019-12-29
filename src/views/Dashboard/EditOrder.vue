@@ -12,17 +12,17 @@
       <Cart v-for="item in cart" :product="item" :key="item._id" />
       <div class="cart-item total-price">總計金額 ${{totalPrice}}</div>
     </div>
-    <Form :form="form" :paymentStatus="order.paymentStatus" />
+    <OrderForm :form="form" :paymentStatus="order.paymentStatus" />
   </div>
 </template>
 
 <script>
 import Cart from "@/components/Cart.vue";
-import Form from "@/components/Form.vue";
+import OrderForm from "@/components/OrderForm.vue";
 export default {
   components: {
     Cart,
-    Form
+    OrderForm
   },
   computed: {
     order() {

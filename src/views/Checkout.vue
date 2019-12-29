@@ -17,7 +17,7 @@
       <div class="cart-item total-price">總計金額 ${{totalPrice}}</div>
     </div>
     <div v-if="!order.paymentStatus">
-      <Form :form="form" :paymentStatus="Status" />
+      <OrderForm :form="form" :paymentStatus="Status" />
       <router-link to="/">
         <button class="step__normal">&lt;&lt; 繼續購物</button>
       </router-link>
@@ -34,10 +34,10 @@
 
 <script>
 import Cart from "../components/Cart";
-import Form from "../components/Form";
+import OrderForm from "../components/OrderForm";
 import axios from "axios";
 export default {
-  components: { Cart, Form },
+  components: { Cart, OrderForm },
   data() {
     return {
       Status: false

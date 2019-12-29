@@ -30,7 +30,7 @@
 
 <script>
 export default {
-  name: "orderform",
+  name: "OrderForm",
   props: {
     form: Object,
     paymentStatus: Boolean
