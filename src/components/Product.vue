@@ -1,6 +1,6 @@
 <template>
   <div class="product">
-    <img :src="product.src" alt />
+    <img :src="product.src" :alt="product.name" />
     <div>{{product.name}}</div>
     <div>${{product.price}}</div>
     <div>
@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     handleAdd() {
-      this.$emit("add", this.product);
+      this.$emit("add");
     }
   }
 };

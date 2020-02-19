@@ -1,5 +1,6 @@
 <template>
   <div class="cart">
+    <loading :active.sync="isLoading" :color="'white'" :background-color="'#17181c'"></loading>
     <div class="cart-header">
       <div>1.確認購買清單</div>
       <div class="active">2.填寫收件資訊</div>
@@ -7,14 +8,10 @@
     </div>
     <h1>購物車清單</h1>
     <div class="cart-information">
-      <div class="cart-item">
-        <div class="cart-item__name">商品</div>
-        <div class="cart-item__quantity">數量</div>
-        <div class="cart-item__price">單價</div>
-        <div class="cart-item__total">小計</div>
-      </div>
-      <Cart v-for="item in cart" :product="item" :key="item.id" />
-      <div class="cart-item total-price">總計金額 ${{totalPrice}}</div>
+      <CartItem  
+      :cart="cart"
+      :totalPrice="totalPrice" 
+      :discountPrice="discountPrice" />
     </div>
     <h1>請填寫收件資訊</h1>
     <form @submit.prevent="checkout">
@@ -87,40 +84,31 @@
 </template>
 
 <script>
-import Cart from "../components/Cart";
-import axios from "axios"
+import CartItem from "../components/CartItem";
+import axios from "axios";
+import { mapState } from "vuex";
 export default {
   name: "order",
-  components: { Cart },
+  components: { CartItem },
   data() {
     return {
       reg: /^.*?@[a-z]+\.[a-z]+/,
-      showSuccess:false
+      showSuccess:false,
+      isLoading:false
     };
   },
   computed: {
-    form() {
-      return this.$store.state.form;
-    },
-    cart() {
-      return this.$store.state.cart;
-    },
+    ...mapState(["cart", "form","totalPrice", "discountPrice"]),
     emailError() {
       return this.form.email == ""
         ? ""
         : this.reg.test(this.form.email)
         ? ""
         : "請輸入正確的Email格式";
-    },
-    totalPrice() {
-      return this.cart.reduce(
-        (total, item) => total + item.quantity * item.price,
-        0
-      );
     }
   },
   methods: {
-    checkout() {
+    async checkout() {
       function uid() {
         return Math.random()
           .toString(36)
@@ -128,13 +116,19 @@ export default {
       }
       const id = uid() + uid();
       const date = new Date().toLocaleString();
-      axios.post(process.env.VUE_APP_ORDERS_URL,{
+      const data = {
         id, 
       date, 
       cart: [...this.cart], 
       form: { ...this.form },
-      paymentStatus:false }
+      totalPrice:this.totalPrice,
+      discountPrice:this.discountPrice,
+      paymentStatus:false 
+      }
+      this.isLoading=true
+      await axios.post(process.env.VUE_APP_ORDERS_URL,data
       )
+      this.isLoading=false
       this.showSuccess= true
       setTimeout(()=>{
         this.$router.push("/checkout/" + id)
@@ -142,6 +136,7 @@ export default {
         this.$store.state.cart = [];
         localStorage.setItem("cart",JSON.stringify(this.$store.state.cart))
         this.$store.state.form = {};
+        this.$store.percentDiscount = null
         }
       ,1000)
     },

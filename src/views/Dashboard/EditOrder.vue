@@ -3,25 +3,21 @@
     <h1>訂單編號: {{order.id}}</h1>
     <div>日期: {{order.date}}</div>
     <div class="cart-information">
-      <div class="cart-item">
-        <div class="cart-item__name">商品</div>
-        <div class="cart-item__quantity">數量</div>
-        <div class="cart-item__price">單價</div>
-        <div class="cart-item__total">小計</div>
-      </div>
-      <Cart v-for="item in cart" :product="item" :key="item._id" />
-      <div class="cart-item total-price">總計金額 ${{totalPrice}}</div>
+      <CartItem  
+      :cart="cart"
+      :totalPrice="totalPrice" 
+      :discountPrice="discountPrice" />
     </div>
     <OrderForm :form="form" :paymentStatus="order.paymentStatus" />
   </div>
 </template>
 
 <script>
-import Cart from "@/components/Cart.vue";
+import CartItem from "@/components/CartItem.vue";
 import OrderForm from "@/components/OrderForm.vue";
 export default {
   components: {
-    Cart,
+    CartItem,
     OrderForm
   },
   computed: {
@@ -34,15 +30,15 @@ export default {
       return this.order.cart;
     },
     totalPrice() {
-      return this.cart.reduce(
-        (total, item) => total + item.quantity * item.price,
-        0
-      );
+      return this.order.totalPrice;
+    },
+    discountPrice() {
+      return this.order.discountPrice;
     },
     form() {
       return this.order.form;
     }
-  },
+  }
 };
 </script>
 

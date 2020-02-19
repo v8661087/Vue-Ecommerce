@@ -7,7 +7,7 @@
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" required="true" v-model="password" />
+        <input type="password" id="password" name="password" required="true" v-model="password" autocomplete="off" />
       </div>
       <input type="submit" value="登入" ref="button" />
     </form>

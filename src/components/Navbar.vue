@@ -1,11 +1,15 @@
 <template>
-  <div id="nav">
+  <nav id="nav">
+    <router-link id="logo" to="/">
+      <img src="../assets/pokeball.png" alt="pokeball" />Pokemon
+    </router-link>
     <router-link to="/">Home</router-link>|
     <router-link to="/cart">購物車({{cart.length}})</router-link>|
-    <router-link v-show="!logining" to="/login">登入</router-link>
-    <router-link v-show="logining" to="/dashboard">Dashboard</router-link>|
-    <a style="cursor:pointer" v-show="logining" @click="logout">登出</a>
-  </div>
+    <router-link v-if="!logining" to="/login">登入</router-link>
+    <router-link v-else to="/dashboard">Dashboard</router-link>
+    <span v-show="logining">|</span>
+    <a v-if="logining" @click="logout">登出</a>
+  </nav>
 </template>
 
 <script>
@@ -14,8 +18,10 @@ export default {
   props: { logining: Boolean, cart: Array },
   methods: {
     logout() {
-      this.$store.state.logining = false;
-      this.$router.push("/login");
+      setTimeout(() => {
+        this.$store.state.logining = false;
+        this.$router.push("/login");
+      }, 500);
     }
   }
 };

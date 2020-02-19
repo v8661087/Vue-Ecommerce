@@ -1,46 +1,86 @@
-h1{
-    word-wrap: break-word
+h1 {
+  word-wrap: break-word;
+}
+$phone-media: 480px;
+@mixin phone-width() {
+  @media all and (max-width: $phone-media) {
+    @content;
   }
-  $phone-media:480px;
-  @mixin phone-width(){
-     @media all and (max-width: $phone-media){
-       @content
-     }
+}
+.dashboard {
+  display: flex;
+  justify-content: center;
+  @include phone-width {
+    display: block;
   }
-  .dashboard {
-    display: flex;
-    justify-content: center;
-    @include phone-width{
-      display: block;
-      }
-    &-action {
-      max-width: 180px;
-      width: 100%;
-      border-right: 1px solid gray;
+  &-action {
+    max-width: 180px;
+    width: 100%;
+    min-height: calc( 100vh - 63px);
+    border-right: 1px solid gray;
+    background: #494949;
+    h3{
       @include phone-width{
-        max-width: none;
-        border:none
+        margin: 0;
       }
     }
-    &-view {
-      width: 100%;
-      min-width: 240px;
-      table {
-        word-break:break-all; word-wrap:break-all;
-        margin: 0 auto;
-        box-sizing: border-box
-      }
+    @include phone-width {
+      max-width: none;
+      border-right: none;
+      border-bottom: 1px solid gray;
+      min-height: 100%;
     }
-    ul{
-      @include phone-width{
+    ul {
+      @include phone-width {
         display: flex;
         justify-content: center;
       }
-    }
-    li {
-      height: 30px;
-      @include phone-width{
-        padding: 3px;
+      li {
+        a {
+          display: block;
+          text-align: left;
+          padding: 9px 18px;
+        }
+        a.router-link-active {
+          color: rgb(0, 183, 255);
+        }
+        @include phone-width {
+          padding: 3px;
+        }
       }
     }
   }
+  &-view {
+    width: 100%;
+    min-width: 240px;
+    min-height: calc( 100vh - 63px);
+    background: #252525;
+    table {
+      word-break: break-all;
+      word-wrap: break-all;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+  }
+}
+svg {
+  margin-right: 3px;
+}
+button {
+  &.new {
+    &:hover{
+      background: rgb(0, 110, 255);
+    }
+  }
+  &.edit {
+    background: gray;
+    padding: 6px 12px;
+  }
+  &.delete {
+    background: red;
+    padding: 6px 12px;
+    &:hover {
+      color: white;
+    }
+  }
+}

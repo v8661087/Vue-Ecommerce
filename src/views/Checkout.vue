@@ -7,21 +7,17 @@
     </div>
     <h1>訂單資訊</h1>
     <div class="cart-information">
-      <div class="cart-item">
-        <div class="cart-item__name">商品</div>
-        <div class="cart-item__quantity">數量</div>
-        <div class="cart-item__price">單價</div>
-        <div class="cart-item__total">小計</div>
-      </div>
-      <Cart v-for="item of cart" :product="item" :key="item._id" />
-      <div class="cart-item total-price">總計金額 ${{totalPrice}}</div>
+      <CartItem  
+      :cart="cart"
+      :totalPrice="totalPrice" 
+      :discountPrice="discountPrice" />
     </div>
     <div v-if="!order.paymentStatus">
-      <OrderForm :form="form" :paymentStatus="Status" />
+      <OrderForm :form="form" :paymentStatus="status" />
       <router-link to="/">
         <button class="step__normal">&lt;&lt; 繼續購物</button>
       </router-link>
-      <button v-if="!Status" @click="handlePayment">立即付款</button>
+      <button v-if="!status" @click="handlePayment">立即付款</button>
     </div>
     <div v-else>
       <Form :form="form" :paymentStatus="order.paymentStatus" />
@@ -33,14 +29,14 @@
 </template>
 
 <script>
-import Cart from "../components/Cart";
+import CartItem from "../components/CartItem";
 import OrderForm from "../components/OrderForm";
 import axios from "axios";
 export default {
-  components: { Cart, OrderForm },
+  components: { CartItem, OrderForm },
   data() {
     return {
-      Status: false
+      status: false
     };
   },
   computed: {
@@ -59,16 +55,16 @@ export default {
       return this.order.paymentStatus;
     },
     totalPrice() {
-      return this.cart.reduce(
-        (total, item) => total + item.quantity * item.price,
-        0
-      );
+      return this.order.totalPrice;
+    },
+    discountPrice() {
+      return this.order.discountPrice;
     }
   },
   methods: {
     handlePayment() {
       setTimeout(() => {
-        this.Status = true;
+        this.status = true;
         axios.patch(process.env.VUE_APP_ORDERS_URL + this.order._id, {
           cart: this.order.cart,
           form: this.order.form,
@@ -76,6 +72,9 @@ export default {
         });
       }, 500);
     }
+  },
+  created(){
+    this.$store.dispatch("getOrders",process.env.VUE_APP_ORDERS_URL)
   }
 };
 </script>

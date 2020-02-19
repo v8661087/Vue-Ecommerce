@@ -1,4 +1,8 @@
 <template>
+  <div class="product-form">
+  <div>
+    <img :src="mySrc" alt />
+  </div>
   <form @submit.prevent="handleSubmit">
     <div class="form-group">
       <label for="name">Name</label>
@@ -34,8 +38,12 @@
       <label for="type">Type</label>
       <input type="text" id="type" name="type" required="true" v-model="myType" />
     </div>
-    <input type="submit" value="送出" />
+    <div>
+      <button @click.prevent="handleCancel">取消</button>
+      <button class="save" type="submit">保存</button>
+    </div>
   </form>
+  </div>
 </template>
 
 <script>
@@ -81,6 +89,9 @@ export default {
       } else {
         this.myRemaining = this.myRemaining.replace(/^0|\D/g, "");
       }
+    },
+    handleCancel() {
+      window.history.back();
     },
     handleSubmit() {
       this.$emit("submit", {

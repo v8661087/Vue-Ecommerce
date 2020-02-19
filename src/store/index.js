@@ -21,7 +21,20 @@ export default new Vuex.Store({
     orders: [],
     lists: ["全部", "火", "水", "草", "電", "冰", "龍"],
     cart: [],
-    products: []
+    get totalPrice(){
+      return this.cart.reduce((total, product) => total + product.quantity * product.price,
+      0)
+    },
+    percentDiscount:null,
+    get discountPrice(){
+      if(this.percentDiscount){
+        return Math.round(this.totalPrice * (100-this.percentDiscount)/100)
+      }
+      return false
+    },
+    products: [],
+    coupons: [],
+    itemOfPage:9
   },
   mutations: {
     addToCart(state, product) {
@@ -33,6 +46,13 @@ export default new Vuex.Store({
         cart.push({ ...product });
       }
       localStorage.setItem("cart", JSON.stringify(cart));
+      const div = document.createElement("div");
+      const text = document.createTextNode("商品已加入購物車");
+      div.appendChild(text);
+      document.getElementById("popup").appendChild(div);
+      setTimeout(() => {
+        document.getElementById("popup").removeChild(div);
+      }, 1500);
     },
     deleteProduct(state, product) {
       const cart = state.cart;
@@ -44,6 +64,9 @@ export default new Vuex.Store({
     },
     ORDERS(state, payload) {
       state.orders = payload;
+    },
+    COUPONS(state, payload){
+      state.coupons = payload
     }
   },
   actions: {
@@ -68,6 +91,12 @@ export default new Vuex.Store({
           context.commit("ORDERS", response.data);
         });
       }
+    },
+    getCoupons(context, payload) {
+      const api = payload;
+      axios.get(api).then(function(response) {
+        context.commit("COUPONS", response.data);
+      });
     }
   },
   getters: {},

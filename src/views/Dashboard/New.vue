@@ -1,6 +1,5 @@
 <template>
-  <div class="dashboard__action">
-    <img :src="src" alt />
+  <div>
     <ProductForm
       :name="name"
       :price="price"

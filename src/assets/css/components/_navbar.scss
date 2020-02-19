@@ -1,20 +1,31 @@
 #nav {
-    position: fixed;
-    top:0;
-    left:0;
-    width: 100%;
-    height: 45px;
-    padding: 9px 15px;
-    background: #17181c;
+  #logo {
     display: flex;
+    margin: 0 2% 0 1%;
+    color: #0091ff;
     align-items: center;
-    z-index: 1;
-    a {
-      font-weight: bold;
-      text-decoration: none;
-      color: white;
-      &.router-link-exact-active {
-        color: #42b983;
-      }
+    img {
+      width: 21px;
+      padding-right: 3px;
     }
   }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 45px;
+  padding: 9px 15px;
+  background: #17181c;
+  display: flex;
+  align-items: center;
+  z-index: 99;
+  a {
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
+}

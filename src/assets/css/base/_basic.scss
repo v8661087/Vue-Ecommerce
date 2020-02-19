@@ -24,7 +24,12 @@ a {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+.container {
+  width: 100%;
+  min-height: calc(100vh - 63px);
+  padding-top: 63px;
+  text-align: center;
+}
 input[type="submit"] {
   color: white;
   width: 100%;
@@ -50,11 +55,14 @@ button {
     background: gray;
     color: white;
   }
+  &.save{
+    background:#005bd3;
+    &:hover{
+      background:#167bff;
+    }
+  }
 }
-.total-price {
-  justify-content: flex-end;
-  padding-right: 33px;
-}
+
 .step {
   &__normal {
     color: rgb(0, 195, 255);
@@ -114,4 +122,49 @@ button {
   &:hover {
     color: red;
   }
+}
+.pagination {
+  margin: 15px 0;
+  display: flex;
+  justify-content: center; 
+}
+.page-link {
+  display: block;
+  padding:9px 18px;
+  color: rgb(51, 162, 255);
+  background-color: #17181c;
+  border: 1px solid gray;
+  &:hover {
+    background-color: #373a42;
+  }
+  &.active {
+    color: white;
+    background: rgb(0, 137, 250);
+    &:hover {
+      background: rgb(51, 162, 255);
+    }
+  }
+  &.disabled {
+    pointer-events: none;
+  }
+}
+.text{
+  &-success{
+    color:rgb(0, 216, 18)
+  }
+  &-failure{
+    color:red
+  }
+}
+table{
+  border-collapse:collapse;
+}
+th {
+  padding: 6px;
+}
+td {
+  padding: 3px 0;
+}
+tr{
+  border-bottom: 1px solid gray;
 }

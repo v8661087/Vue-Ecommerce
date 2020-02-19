@@ -1,98 +1,100 @@
 <template>
   <div class="home">
-    <div class="list">
-      <span>屬性</span>
-      <ul>
-        <List
-          v-for="(list,index) in lists"
-          :class="{active: list === currtype}"
-          :list="list"
-          :key="index"
-          @active="handleActive(list)"
+    <Slider />
+    <main>
+      <!-- List -->
+      <div class="type">
+        <span>屬性</span>
+        <ul>
+          <List
+            v-for="(list,index) in lists"
+            :class="{'active': list === currtype}"
+            :list="list"
+            :key="index"
+            @active="handleActive(list)"
+          />
+        </ul>
+      </div>
+      <div v-show="!products.length" class="loading"></div>
+      <!-- Product -->
+      <div class="products">
+        <Product
+          v-for="product in filteredProducts.slice((currPage-1)*itemOfPage,currPage*itemOfPage)"
+          :product="product"
+          :key="product._id"
+          @add="handleAdd(product)"
         />
-      </ul>
-    </div>
-    <div v-show="!products.length" class="loading"></div>
-    <div class="products">
-      <Product
-        v-for="product in filteredProducts"
-        :product="product"
-        :key="product._id"
-        @add="handleAdd(product)"
-      />
-    </div>
-    <div class="drawer" @click="showCartDrawer= !showCartDrawer">
-      <img src="../assets/cart-icon.png" alt />
-      <span>{{cart.length}}</span>
-    </div>
-    <div v-show="showCartDrawer" class="drawer-items">
-      <div v-if="cart.length">
-        <div class="drawer-item" v-for="item of cart" :key="item._id">
-          <img :src="item.src" :alt="item.name" />
-          <div class="drawer-item__name">{{item.name}}</div>
-          <div class="drawer-item__total">
-            <span>
-              <b>${{item.price}}</b>
-              * {{item.quantity}}
-            </span>
-            <div @click="handleDelete(item)"><span class="delete">刪除</span></div>
-          </div>
-        </div>
-        <router-link to="cart">
-          <div class="link">
-            查看購物車
-          </div>
-        </router-link>
       </div>
-      <div v-else class="drawer__empty">
-        <div>尚無商品</div>
-        <img src="../assets/smile.png" alt />
-      </div>
-      <div class="triangle"></div>
-    </div>
-    <div v-show="showAddToCart" class="add-to-cart">商品已加入購物車</div>
+    </main>
+    <!-- Pagination -->
+    <Pagination :currPage="currPage" :totalPage="totalPage" @setPage="setPage" />
+    <!-- CartDrawer -->
+    <CartDrawer :cart="cart" />
+    <!-- popup -->
+    <div id="popup"></div>
+    <Footer />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Product from "@/components/Product.vue";
+import Slider from "@/components/Slider.vue";
 import List from "@/components/List.vue";
-import {mapState} from "vuex"
+import Product from "@/components/Product.vue";
+import Pagination from "@/components/Pagination.vue";
+import CartDrawer from "@/components/CartDrawer.vue";
+import Footer from "@/components/Footer.vue";
+import { mapState } from "vuex";
 export default {
   name: "home",
   data() {
     return {
       currtype: "全部",
-      showAddToCart: false,
-      showCartDrawer: false
+      currPage: 1
     };
   },
   components: {
+    Slider,
+    List,
     Product,
-    List
+    Pagination,
+    CartDrawer,
+    Footer
   },
   methods: {
     handleActive(list) {
-      this.currtype = list;
-      window.scroll(0,0)
+      if (this.currtype !== list) {
+        this.currtype = list;
+        this.currPage = 1;
+        this.scrollToProducts();
+      }
     },
     handleAdd(product) {
-      this.$store.dispatch("addToCartAction",product)
-      this.showAddToCart = true;
-      setTimeout(() => (this.showAddToCart = false), 1500);
+      this.$store.dispatch("addToCartAction", product);
     },
-    handleDelete(product) {
-      this.$store.dispatch("deleteProductAction",product)
+    setPage(n) {
+      if (this.currPage !== n) {
+        this.currPage = n;
+        this.scrollToProducts();
+      }
+    },
+    scrollToProducts() {
+      const getHeight = document.getElementById("slider").scrollHeight;
+      window.scroll({ top: getHeight, left: 0, behavior: "smooth" });
     }
   },
   computed: {
-    ...mapState(["lists","products","cart"]),
+    ...mapState(["lists", "products", "cart", "itemOfPage"]),
     filteredProducts: function() {
       if (this.currtype === "全部") {
         return this.products;
       }
-      return this.products.filter(item =>item.type.indexOf(this.currtype)> -1);
+      return this.products.filter(
+        item => item.type.indexOf(this.currtype) > -1
+      );
+    },
+    totalPage() {
+      return Math.ceil(this.filteredProducts.length / this.itemOfPage);
     }
   }
 };

@@ -22,8 +22,8 @@
     </div>
     <div>
       <span>付款狀態</span>
-      <b style="color:#3FBF3F" v-if="paymentStatus">成功付款</b>
-      <b style="color:red" v-else>尚未付款</b>
+      <b class="text-success" v-if="paymentStatus">成功付款</b>
+      <b class="text-failure" v-else>尚未付款</b>
     </div>
   </div>
 </template>

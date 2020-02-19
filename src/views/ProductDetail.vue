@@ -5,7 +5,10 @@
     </div>
     <div class="product-information">
       <div>{{product.name}}</div>
-      <div>${{product.price}}</div>
+      <div>
+        <b style="font-size:45px" class="text-success">${{product.price}}</b>
+      </div>
+      <div>屬性 {{product.type}}</div>
       <div class="product__quantity">
         <span>數量</span>
         <button @click="handleDecrement">-</button>
@@ -19,19 +22,28 @@
         </button>
       </div>
     </div>
-    <div v-show="showAddToCart" class="add-to-cart">商品已加入購物車</div>
+    <!-- popup -->
+    <div id="popup"></div>
+    <!-- CartDrawer -->
+    <CartDrawer :cart="cart" />
   </div>
 </template>
 
 <script>
+import CartDrawer from "@/components/CartDrawer.vue";
 export default {
   data() {
     return {
-      currQuantity: 1,
-      showAddToCart: false
+      currQuantity: 1
     };
   },
+  components: {
+    CartDrawer
+  },
   computed: {
+    cart() {
+      return this.$store.state.cart;
+    },
     product() {
       return this.$store.state.products.find(
         product => product._id == this.$route.params.id
@@ -45,7 +57,7 @@ export default {
       }
     },
     handleIncrement() {
-      if(this.currQuantity < this.product.remaining){
+      if (this.currQuantity < this.product.remaining) {
         this.currQuantity++;
       }
     },
@@ -55,14 +67,12 @@ export default {
       }
       this.product.quantity = this.currQuantity;
       this.$store.dispatch("addToCartAction", this.product);
-      this.showAddToCart = true;
-      setTimeout(() => (this.showAddToCart = false), 1500);
     },
     handleChange() {
-      const max = +this.product.remaining
+      const max = +this.product.remaining;
       this.currQuantity = this.currQuantity.replace(/^0|\D/g, "");
       if (this.currQuantity > max) {
-        this.currQuantity =  max
+        this.currQuantity = max;
       }
       if (this.currQuantity !== "") {
         this.currQuantity = +this.currQuantity;

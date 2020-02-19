@@ -3,3 +3,11 @@ Vue電商網站，Vue CLI 3建立開發環境，Vuex儲存狀態容器，串接�
 <img src="src/assets/vue-ecommerce-1.jpg">
 # Live Demo
 <a href="https://v8661087.github.io/Vue-Ecommerce/" target="_blank">https://v8661087.github.io/Vue-Ecommerce/</a>
+
+# 技能
+<ul>
+<li>Vue</li>
+<li>Vue CLI 3</li>
+<li>Vuex</li>
+<li>Vue Router</li>
+</ul>

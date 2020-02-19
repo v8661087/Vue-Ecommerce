@@ -1,3 +1,16 @@
+.product-form{
+  display: flex;
+  img{
+    width: 100%;
+    max-width:540px;
+  }
+}
+@media (max-width:600px){
+  .product-form{
+    display: block;
+  }
+}
+
 form {
     max-width: 330px;
     margin: 9px auto;

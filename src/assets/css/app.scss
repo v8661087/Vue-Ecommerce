@@ -1,13 +1,14 @@
-@import '_reset.css';
-
+@import '_normalize.css';
+@import 'base/basic.scss';
 @import 'components/product.scss';
 @import 'components/cart.scss';
 @import 'components/form.scss';
 @import 'components/list.scss';
+@import 'components/cartdrawer.scss';
 @import 'components/productform.scss';
 @import 'components/navbar.scss';
 @import 'components/footer.scss';
-@import 'base/basic.scss';
+
 @import 'pages/home.scss';
 @import 'pages/login.scss';
 @import 'pages/dashboard.scss';
