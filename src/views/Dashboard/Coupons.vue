@@ -102,6 +102,7 @@
         </form>
       </div>
     </div>
+    <div class="modal" v-show="showDelete">刪除成功</div>
     <!-- Pagination -->
     <Pagination :currPage="currPage" :totalPage="totalPage" @setPage="setPage" />
   </div>
@@ -169,11 +170,11 @@ export default {
     },
     async removeCoupon(item) {
       this.$store.state.isLoading = true;
+      this.showAlert = false;
       await axios.delete(process.env.VUE_APP_COUPONS_URL + item._id);
       this.getCoupons();
       this.showDelete = true;
       setTimeout(()=>{
-        this.showAlert = false;
         this.showDelete = false;
       },1000)
     },
