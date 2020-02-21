@@ -34,6 +34,7 @@
               <button class="edit">編輯</button>
             </router-link>
             <button class="delete" @click="showAlert=true">刪除</button>
+            <!-- alert -->
             <div class="modal" v-show="showAlert">
               <div>確定要刪除這個商品嗎?</div>
               <button @click="handleDelete(product)">確定</button>
@@ -60,15 +61,13 @@ export default {
       showAlert: false,
       showDelete: false,
       currPage: 1,
-      isLoading:false
     };
   },
   components:{
     Pagination
   },
   computed: {
-    ...mapState(['products','itemOfPage']),
-    //每頁商品數量
+    ...mapState(['products','itemOfPage','isLoading']),
     totalPage() {
       return Math.ceil(this.products.length / this.itemOfPage);
     }
@@ -80,30 +79,30 @@ export default {
         window.scrollTo(0, 0);
       }
     },
-    handleDelete(product) {
+    async handleDelete(product) {
       if (this.products.indexOf(product) < 9) {
         alert("這個商品不能刪除");
       } else {
-        axios.delete(process.env.VUE_APP_PRODUCTS_URL + product._id);
+        this.$store.state.isLoading = true
+        this.showAlert = false;
+        await axios.delete(process.env.VUE_APP_PRODUCTS_URL + product._id);
+        this.fetchProducts()
         this.showDelete = true;
         setTimeout(() => {
-          this.showAlert = false;
           this.showDelete = false;
-          this.products.splice(this.products.indexOf(product), 1);
         }, 1000);
       }
     },
     fetchProducts() {
-      this.$store.dispatch("getProducts", process.env.VUE_APP_PRODUCTS_URL);
+      this.$store.dispatch("getProducts",process.env.VUE_APP_PRODUCTS_URL);
     },
   },
   created(){
-    this.isLoading = true
-    this.fetchProducts()
-    if(this.products){
-      setTimeout(()=>{
-        this.isLoading = false
-      },500)
+    this.fetchProducts();
+  },
+  updated(){
+    if(this.totalPage === 1 ){
+      this.currPage = 1
     }
   }
 };

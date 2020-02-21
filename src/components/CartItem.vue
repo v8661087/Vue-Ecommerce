@@ -16,7 +16,7 @@
       <div class="cart-item__total">${{product.quantity * product.price}}</div>
     </div>
     <div class="cart-item total-price" >總計金額 ${{totalPrice}}</div>
-    <div class="cart-item total-price discount" v-show="discountPrice">折扣後金額 ${{discountPrice}}</div>
+    <div class="cart-item total-price discount" v-if="discountPrice">折扣後金額 ${{discountPrice}}</div>
   </div>
 </template>
 

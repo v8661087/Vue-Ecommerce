@@ -1,5 +1,6 @@
 <template>
   <div>
+    <loading :active.sync="isLoading" :color="'white'" :background-color="'#17181c'"></loading>
     <ProductForm
       :name="name"
       :price="price"
@@ -23,11 +24,14 @@ export default {
       src: "",
       remaining: "",
       type: "",
-      showUpdate: false,
+      showUpdate: false
     };
   },
   components: { ProductForm },
   computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
+    },
     product() {
       return this.$store.state.products.find(
         item => item._id == this.$route.params.id
@@ -44,13 +48,14 @@ export default {
     }
   },
   methods: {
-    handleSubmit(val) {
+    async handleSubmit(val) {
       this.name = val.name;
       this.price = val.price;
       this.remaining = val.remaining;
       this.src = val.src;
       this.type = val.type;
-      axios.patch(process.env.VUE_APP_PRODUCTS_URL + this.product._id, {
+      this.$store.state.isLoading = true;
+      await axios.patch(process.env.VUE_APP_PRODUCTS_URL + this.product._id, {
         name: this.name,
         price: this.price,
         remaining: this.remaining,
@@ -58,11 +63,12 @@ export default {
         type: this.type
       });
       this.showUpdate = true;
+      this.$store.state.isLoading = false;
       setTimeout(() => {
         this.showUpdate = false;
         this.$router.push("/dashboard/products");
       }, 1000);
-    },
+    }
   }
 };
 </script>

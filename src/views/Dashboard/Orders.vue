@@ -41,20 +41,19 @@ import {mapState} from "vuex"
 export default {
   data() {
     return {
-      currPage: 1,
-      isLoading:false
+      currPage: 1
     };
   },
   components:{
     Pagination
   },
   computed: {
-    ...mapState(['orders','itemOfPage']),
+    ...mapState(['orders','itemOfPage','isLoading']),
     totalPage() {
       return Math.ceil(this.orders.length / this.itemOfPage);
     },
     sortedOrders() {
-      var newOrders = this.orders.slice(0);
+      var newOrders = [...this.orders];
       newOrders = newOrders.sort((a, b) => (a.date < b.date ? 1 : -1));
       return newOrders;
     }
@@ -71,13 +70,7 @@ export default {
     },
   },
   created(){
-    this.isLoading = true
     this.fetchOrders()
-    if(this.orders){
-      setTimeout(()=>{
-        this.isLoading = false
-      },500)
-    }
   }
 };
 </script>

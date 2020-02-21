@@ -1,5 +1,6 @@
 <template>
   <div>
+    <loading :active.sync="isLoading" :color="'white'" :background-color="'#17181c'"></loading>
     <ProductForm
       :name="name"
       :price="price"
@@ -28,14 +29,20 @@ export default {
     };
   },
   components: { ProductForm },
+  computed:{
+    isLoading(){
+      return this.$store.state.isLoading
+    }
+  },
   methods: {
-    handleSubmit(val) {
+    async handleSubmit(val) {
       this.name = val.name;
       this.price = val.price;
       this.remaining = val.remaining;
       this.src = val.src;
       this.type = val.type;
-      axios.post(process.env.VUE_APP_PRODUCTS_URL, {
+      this.$store.state.isLoading = true
+      await axios.post(process.env.VUE_APP_PRODUCTS_URL, {
         name: this.name,
         price: this.price,
         quantity: 1,
@@ -44,7 +51,9 @@ export default {
         src: this.src
       });
       this.showAdd = true;
+      this.$store.state.isLoading = false
       setTimeout(() => {
+        this.$store.state.isLoading = false
         this.showAdd = false;
         this.$router.push("/dashboard/products");
       }, 1000);

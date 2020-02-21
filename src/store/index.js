@@ -4,6 +4,7 @@ import axios from "axios";
 Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
+    isLoading: true,
     accounts: [
       {
         email: "test@test.com",
@@ -21,20 +22,24 @@ export default new Vuex.Store({
     orders: [],
     lists: ["全部", "火", "水", "草", "電", "冰", "龍"],
     cart: [],
-    get totalPrice(){
-      return this.cart.reduce((total, product) => total + product.quantity * product.price,
-      0)
+    get totalPrice() {
+      return this.cart.reduce(
+        (total, product) => total + product.quantity * product.price,
+        0
+      );
     },
-    percentDiscount:null,
-    get discountPrice(){
-      if(this.percentDiscount){
-        return Math.round(this.totalPrice * (100-this.percentDiscount)/100)
+    percentDiscount: null,
+    get discountPrice() {
+      if (this.percentDiscount) {
+        return Math.round(
+          (this.totalPrice * (100 - this.percentDiscount)) / 100
+        );
       }
-      return false
+      return false;
     },
     products: [],
     coupons: [],
-    itemOfPage:9
+    itemOfPage: 9
   },
   mutations: {
     addToCart(state, product) {
@@ -59,14 +64,17 @@ export default new Vuex.Store({
       cart.splice(cart.indexOf(product), 1);
       localStorage.setItem("cart", JSON.stringify(cart));
     },
+    LOADING(state, status) {
+      state.isLoading = status;
+    },
     PRODUCTS(state, payload) {
       state.products = payload;
     },
     ORDERS(state, payload) {
       state.orders = payload;
     },
-    COUPONS(state, payload){
-      state.coupons = payload
+    COUPONS(state, payload) {
+      state.coupons = payload;
     }
   },
   actions: {
@@ -77,25 +85,27 @@ export default new Vuex.Store({
       context.commit("deleteProduct", payload);
     },
     getProducts(context, payload) {
+      context.commit("LOADING", true);
       const api = payload;
-      if (axios.get(api)) {
-        axios.get(api).then(function(response) {
-          context.commit("PRODUCTS", response.data);
-        });
-      }
+      axios.get(api).then(function(response) {
+        context.commit("PRODUCTS", response.data);
+        context.commit("LOADING", false);
+      });
     },
     getOrders(context, payload) {
+      context.commit("LOADING", true);
       const api = payload;
-      if (axios.get(api)) {
-        axios.get(api).then(function(response) {
-          context.commit("ORDERS", response.data);
-        });
-      }
+      axios.get(api).then(function(response) {
+        context.commit("ORDERS", response.data);
+        context.commit("LOADING", false);
+      });
     },
     getCoupons(context, payload) {
+      context.commit("LOADING", true);
       const api = payload;
       axios.get(api).then(function(response) {
         context.commit("COUPONS", response.data);
+        context.commit("LOADING", false);
       });
     }
   },

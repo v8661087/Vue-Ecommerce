@@ -11,7 +11,7 @@
             :class="{'active': list === currtype}"
             :list="list"
             :key="index"
-            @active="handleActive(list)"
+            @active="handleActive"
           />
         </ul>
       </div>

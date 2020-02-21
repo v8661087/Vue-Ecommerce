@@ -32,7 +32,7 @@
             <button class="edit" @click="openModal(item)">編輯</button>
             <button class="delete" @click="showAlert=true">刪除</button>
             <div class="modal" v-show="showAlert">
-              <div>確定要刪除這個商品嗎?</div>
+              <div>確定要刪除這個優惠券嗎?</div>
               <button @click="removeCoupon(item)">確定</button>
               <button @click="showAlert=false">取消</button>
             </div>
@@ -125,26 +125,17 @@ export default {
         percent: 30,
         is_enabled: true
       },
-      currPage: 1,isLoading:false
+      currPage: 1,
     };
   },
   components: {
     Pagination
   },
   computed: {
-    ...mapState(["coupons", "itemOfPage"]),
+    ...mapState(["coupons", "itemOfPage","isLoading"]),
     totalPage() {
       return Math.ceil(this.coupons.length / this.itemOfPage);
     }
-  },
-  created() {
-    (window.onclick = e => {
-      if (e.target === document.getElementById("modal")) {
-        this.showModal = false;
-        this.tempCoupon = {};
-      }
-    }),
-      this.getCoupons();
   },
   methods: {
     handleInput(e) {
@@ -163,7 +154,7 @@ export default {
       this.tempCoupon = { ...item };
     },
     async updateCoupon() {
-      this.isLoading = true;
+      this.$store.state.isLoading = true;
       if (this.tempCoupon._id) {
         await axios.patch(
           process.env.VUE_APP_COUPONS_URL + this.tempCoupon._id,
@@ -177,7 +168,7 @@ export default {
       this.showModal = false;
     },
     async removeCoupon(item) {
-      this.isLoading = true;
+      this.$store.state.isLoading = true;
       await axios.delete(process.env.VUE_APP_COUPONS_URL + item._id);
       this.getCoupons();
       this.showDelete = true;
@@ -186,18 +177,28 @@ export default {
         this.showDelete = false;
       },1000)
     },
-    async getCoupons() {
-      this.isLoading = true;
-      await this.$store.dispatch("getCoupons", process.env.VUE_APP_COUPONS_URL);
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 500);
+    getCoupons() {
+      this.$store.dispatch("getCoupons", process.env.VUE_APP_COUPONS_URL);
     },
     setPage(n) {
       if (this.currPage !== n) {
         this.currPage = n;
         window.scrollTo(0, 0);
       }
+    }
+  },
+  created() {
+    (window.onclick = e => {
+      if (e.target === document.getElementById("modal")) {
+        this.showModal = false;
+        this.tempCoupon = {};
+      }
+    }),
+    this.getCoupons();
+  },
+  updated(){
+    if(this.totalPage === 1 ){
+      this.currPage = 1
     }
   }
 };
