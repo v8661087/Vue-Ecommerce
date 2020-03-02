@@ -1,5 +1,5 @@
 # vue-ecommerce Pokemon電商
-Vue電商網站，Vue CLI 4建立開發環境，Vuex儲存狀態容器，串接由Node.js Express MongoDB Atlas Heroku建立之RESTful API取得資料，Vue Router管理路由，localStorage儲存購物車資訊，內建Service Worker製作Progressive Web App。
+Vue 電商網站，Vue CLI 4 建立開發環境，Vuex 儲存狀態容器，串接由 Node.js Express MongoDB Atlas Heroku 建立之 RESTful API 取得資料，Vue Router 管理路由，localStorage 儲存購物車資訊，內建 Service Worker 製作 Progressive Web App。
 <img src="src/assets/vue-ecommerce-1.jpg">
 # Live Demo
 <a href="https://v8661087.github.io/Vue-Ecommerce/" target="_blank">https://v8661087.github.io/Vue-Ecommerce/</a>
