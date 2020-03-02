@@ -78,10 +78,11 @@ const routes = [
         name: "order",
         component: () => import("../views/Dashboard/EditOrder.vue"),
         meta: { requiresAuth: true }
-      },{
-        path:"coupons",
-        name:"coupons",
-        component:()=>import("../views/Dashboard/Coupons.vue"),
+      },
+      {
+        path: "coupons",
+        name: "coupons",
+        component: () => import("../views/Dashboard/Coupons.vue"),
         meta: { requiresAuth: true }
       }
     ]

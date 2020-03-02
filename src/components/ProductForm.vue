@@ -1,48 +1,48 @@
 <template>
   <div class="product-form">
-  <div>
-    <img :src="mySrc" alt />
-  </div>
-  <form @submit.prevent="handleSubmit">
-    <div class="form-group">
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" required="true" v-model="myName" />
-    </div>
-    <div class="form-group">
-      <label for="price">Price</label>
-      <input
-        type="text"
-        id="price"
-        name="price"
-        required="true"
-        v-model="myPrice"
-        @input="handleChange"
-      />
-    </div>
-    <div class="form-group">
-      <label for="remaining">剩餘數量</label>
-      <input
-        type="text"
-        id="remaining"
-        name="remaining"
-        required="true"
-        v-model="myRemaining"
-        @input="handleChange"
-      />
-    </div>
-    <div class="form-group">
-      <label for="src">圖片網址</label>
-      <input type="text" id="src" name="src" required="true" v-model="mySrc" />
-    </div>
-    <div class="form-group">
-      <label for="type">Type</label>
-      <input type="text" id="type" name="type" required="true" v-model="myType" />
-    </div>
     <div>
-      <button @click.prevent="handleCancel">取消</button>
-      <button class="save" type="submit">保存</button>
+      <img :src="mySrc" alt />
     </div>
-  </form>
+    <form @submit.prevent="handleSubmit">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required="true" v-model="myName" />
+      </div>
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input
+          type="text"
+          id="price"
+          name="price"
+          required="true"
+          v-model="myPrice"
+          @input="handleChange"
+        />
+      </div>
+      <div class="form-group">
+        <label for="remaining">剩餘數量</label>
+        <input
+          type="text"
+          id="remaining"
+          name="remaining"
+          required="true"
+          v-model="myRemaining"
+          @input="handleChange"
+        />
+      </div>
+      <div class="form-group">
+        <label for="src">圖片網址</label>
+        <input type="text" id="src" name="src" required="true" v-model="mySrc" />
+      </div>
+      <div class="form-group">
+        <label for="type">Type</label>
+        <input type="text" id="type" name="type" required="true" v-model="myType" />
+      </div>
+      <div>
+        <button @click.prevent="handleCancel">取消</button>
+        <button class="save" type="submit">保存</button>
+      </div>
+    </form>
   </div>
 </template>
 

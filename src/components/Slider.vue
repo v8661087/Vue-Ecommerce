@@ -9,9 +9,9 @@
     <swiper-slide>
       <div class="slide slide-3"></div>
     </swiper-slide>
-    
+
     <div class="swiper-pagination" slot="pagination"></div>
-    
+
     <div class="swiper-button-prev" slot="button-prev"></div>
     <div class="swiper-button-next" slot="button-next"></div>
   </swiper>
@@ -21,14 +21,14 @@
 import "swiper/dist/css/swiper.css"; // require styles
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 export default {
-    name: "Slider",
-    data() {
+  name: "Slider",
+  data() {
     return {
       swiperOption: {
         loop: true,
-        speed: 300,  
+        speed: 300,
         autoplay: {
-          delay: 3000,
+          delay: 3000
         },
         slidesPerView: "auto",
         centeredSlides: true,
@@ -48,7 +48,7 @@ export default {
     swiper,
     swiperSlide
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -56,7 +56,7 @@ export default {
 .swiper-container {
   width: 100%;
   height: 380px;
-  background: #17181c
+  background: #17181c;
 }
 .swiper-slide {
   width: 50%;
@@ -83,13 +83,13 @@ export default {
 .swiper-slide-next {
   background: #fff;
   opacity: 0.3;
-  transition: all .3s;
+  transition: all 0.3s;
 }
 @media screen and (max-width: 640px) {
   .swiper-container {
     height: 280px;
   }
-  .swiper-slide{
+  .swiper-slide {
     width: 69%;
   }
 }

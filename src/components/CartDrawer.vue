@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="drawer" @click="showCartDrawer= !showCartDrawer">
-      <img src="../assets/cart-icon.png" alt="cart" />
+      <img src="../assets/cart-icon.png" alt="cart-icon" />
       <span>{{cart.length}}</span>
     </div>
     <div v-show="showCartDrawer" class="drawer-items">
@@ -43,8 +43,8 @@ export default {
   props: {
     cart: Array
   },
-  methods:{
-    handleDelete(item){
+  methods: {
+    handleDelete(item) {
       this.$store.dispatch("deleteProductAction", item);
     }
   }

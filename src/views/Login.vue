@@ -7,7 +7,14 @@
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" required="true" v-model="password" autocomplete="off" />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required="true"
+          v-model="password"
+          autocomplete="off"
+        />
       </div>
       <input type="submit" value="登入" ref="button" />
     </form>
@@ -21,7 +28,7 @@ export default {
     return {
       email: "test@test.com",
       password: "test",
-      loading:false
+      loading: false
     };
   },
   methods: {
@@ -31,10 +38,10 @@ export default {
         item => item.email == this.email && item.password == this.password
       );
       if (account) {
-        this.loading = true
+        this.loading = true;
         setTimeout(() => {
           this.$store.state.logining = true;
-          this.loading = false
+          this.loading = false;
           this.$router.push("/dashboard");
         }, 500);
       }
@@ -45,11 +52,11 @@ export default {
       return this.$store.state.accounts;
     }
   },
-  mounted(){
-    if(this.$store.state.logining){
-      this.$router.push("/")
+  mounted() {
+    if (this.$store.state.logining) {
+      this.$router.push("/");
     }
-  },
+  }
 };
 </script>
 

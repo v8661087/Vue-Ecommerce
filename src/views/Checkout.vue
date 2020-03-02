@@ -7,10 +7,7 @@
     </div>
     <h1>訂單資訊</h1>
     <div class="cart-information">
-      <CartItem  
-      :cart="cart"
-      :totalPrice="totalPrice" 
-      :discountPrice="discountPrice" />
+      <CartItem :cart="cart" :totalPrice="totalPrice" :discountPrice="discountPrice" />
     </div>
     <div v-if="!order.paymentStatus">
       <OrderForm :form="form" :paymentStatus="status" />
@@ -73,8 +70,8 @@ export default {
       }, 500);
     }
   },
-  created(){
-    this.$store.dispatch("getOrders",process.env.VUE_APP_ORDERS_URL)
+  created() {
+    this.$store.dispatch("getOrders", process.env.VUE_APP_ORDERS_URL);
   }
 };
 </script>

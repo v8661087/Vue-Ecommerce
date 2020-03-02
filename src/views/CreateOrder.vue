@@ -8,10 +8,7 @@
     </div>
     <h1>購物車清單</h1>
     <div class="cart-information">
-      <CartItem  
-      :cart="cart"
-      :totalPrice="totalPrice" 
-      :discountPrice="discountPrice" />
+      <CartItem :cart="cart" :totalPrice="totalPrice" :discountPrice="discountPrice" />
     </div>
     <h1>請填寫收件資訊</h1>
     <form @submit.prevent="checkout">
@@ -62,9 +59,7 @@
       </div>
       <div class="form-group">
         <label for="message">留言</label>
-        <textarea name="message" id="message"
-        cols="30" rows="10"
-         v-model="form.message"></textarea>
+        <textarea name="message" id="message" cols="30" rows="10" v-model="form.message"></textarea>
       </div>
       <input style="display:none" type="submit" value="送出表單" ref="button" />
     </form>
@@ -93,12 +88,12 @@ export default {
   data() {
     return {
       reg: /^.*?@[a-z]+\.[a-z]+/,
-      showSuccess:false,
-      isLoading:false
+      showSuccess: false,
+      isLoading: false
     };
   },
   computed: {
-    ...mapState(["cart", "form","totalPrice", "discountPrice"]),
+    ...mapState(["cart", "form", "totalPrice", "discountPrice"]),
     emailError() {
       return this.form.email == ""
         ? ""
@@ -117,33 +112,31 @@ export default {
       const id = uid() + uid();
       const date = new Date().toLocaleString();
       const data = {
-        id, 
-      date, 
-      cart: [...this.cart], 
-      form: { ...this.form },
-      totalPrice:this.totalPrice,
-      discountPrice:this.discountPrice,
-      paymentStatus:false 
-      }
-      this.isLoading=true
-      await axios.post(process.env.VUE_APP_ORDERS_URL,data
-      )
-      this.isLoading=false
-      this.showSuccess= true
-      setTimeout(()=>{
-        this.$router.push("/checkout/" + id)
-        this.showSuccess= false
+        id,
+        date,
+        cart: [...this.cart],
+        form: { ...this.form },
+        totalPrice: this.totalPrice,
+        discountPrice: this.discountPrice,
+        paymentStatus: false
+      };
+      this.isLoading = true;
+      await axios.post(process.env.VUE_APP_ORDERS_URL, data);
+      this.isLoading = false;
+      this.showSuccess = true;
+      setTimeout(() => {
+        this.$router.push("/checkout/" + id);
+        this.showSuccess = false;
         this.$store.state.cart = [];
-        localStorage.setItem("cart",JSON.stringify(this.$store.state.cart))
+        localStorage.setItem("cart", JSON.stringify(this.$store.state.cart));
         this.$store.state.form = {};
-        this.$store.percentDiscount = null
-        }
-      ,1000)
+        this.$store.percentDiscount = null;
+      }, 1000);
     },
     handleSubmit() {
-      if(this.emailError){
-        this.$refs.emailInput.focus()
-      }else{
+      if (this.emailError) {
+        this.$refs.emailInput.focus();
+      } else {
         this.$refs.button.click();
       }
     }
