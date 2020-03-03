@@ -80,7 +80,7 @@ export default {
     },
     scrollToProducts() {
       const getHeight = document.getElementById("slider").scrollHeight;
-      window.scroll({ top: getHeight, left: 0, behavior: "smooth" });
+      window.scrollTo(0,getHeight)
     }
   },
   computed: {
