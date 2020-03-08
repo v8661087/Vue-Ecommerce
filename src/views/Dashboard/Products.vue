@@ -52,22 +52,22 @@
 
 <script>
 import axios from "axios";
-import Pagination from "@/components/Pagination.vue"
-import {mapState} from 'vuex'
+import Pagination from "@/components/Pagination.vue";
+import { mapState } from "vuex";
 export default {
   name: "products",
   data() {
     return {
       showAlert: false,
       showDelete: false,
-      currPage: 1,
+      currPage: 1
     };
   },
-  components:{
+  components: {
     Pagination
   },
   computed: {
-    ...mapState(['products','itemOfPage','isLoading']),
+    ...mapState(["products", "itemOfPage", "isLoading"]),
     totalPage() {
       return Math.ceil(this.products.length / this.itemOfPage);
     }
@@ -80,29 +80,32 @@ export default {
       }
     },
     async handleDelete(product) {
-      if (this.products.indexOf(product) < 9) {
-        alert("這個商品不能刪除");
-      } else {
-        this.$store.state.isLoading = true
-        this.showAlert = false;
-        await axios.delete(process.env.VUE_APP_PRODUCTS_URL + product._id);
-        this.fetchProducts()
+      this.$store.state.isLoading = true;
+      this.showAlert = false;
+      try {
+        await axios.delete(process.env.VUE_APP_PRODUCTS_URL + product._id, {
+          headers: { token: this.$store.state.token }
+        });
+        this.fetchProducts();
         this.showDelete = true;
         setTimeout(() => {
           this.showDelete = false;
         }, 1000);
+      } catch (err) {
+        alert(err);
+        this.$store.state.isLoading = false;
       }
     },
     fetchProducts() {
-      this.$store.dispatch("getProducts",process.env.VUE_APP_PRODUCTS_URL);
-    },
+      this.$store.dispatch("getProducts", process.env.VUE_APP_PRODUCTS_URL);
+    }
   },
-  created(){
+  created() {
     this.fetchProducts();
   },
-  updated(){
-    if(this.totalPage === 1 ){
-      this.currPage = 1
+  updated() {
+    if (this.totalPage === 1) {
+      this.currPage = 1;
     }
   }
 };

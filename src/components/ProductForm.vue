@@ -86,8 +86,16 @@ export default {
     handleChange(e) {
       if (e.target.name == "price") {
         this.myPrice = this.myPrice.replace(/^0|\D/g, "");
+        let max = 10000;
+        if (this.myPrice > max) {
+          this.myPrice = max;
+        }
       } else {
         this.myRemaining = this.myRemaining.replace(/^0|\D/g, "");
+        let max = 1000;
+        if (this.myRemaining > max) {
+          this.myRemaining = max;
+        }
       }
     },
     handleCancel() {

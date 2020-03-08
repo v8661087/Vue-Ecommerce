@@ -11,6 +11,7 @@ export default new Vuex.Store({
         password: "test"
       }
     ],
+    token:"",
     logining: false,
     form: {
       email: "123@test.com",

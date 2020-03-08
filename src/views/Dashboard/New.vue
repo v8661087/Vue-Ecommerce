@@ -29,9 +29,9 @@ export default {
     };
   },
   components: { ProductForm },
-  computed:{
-    isLoading(){
-      return this.$store.state.isLoading
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
     }
   },
   methods: {
@@ -41,22 +41,29 @@ export default {
       this.remaining = val.remaining;
       this.src = val.src;
       this.type = val.type;
-      this.$store.state.isLoading = true
-      await axios.post(process.env.VUE_APP_PRODUCTS_URL, {
-        name: this.name,
-        price: this.price,
-        quantity: 1,
-        remaining: this.remaining,
-        type: this.type,
-        src: this.src
-      });
-      this.showAdd = true;
-      this.$store.state.isLoading = false
-      setTimeout(() => {
-        this.$store.state.isLoading = false
-        this.showAdd = false;
-        this.$router.push("/dashboard/products");
-      }, 1000);
+      this.$store.state.isLoading = true;
+      try {
+        await axios.post(process.env.VUE_APP_PRODUCTS_URL, {
+          name: this.name,
+          price: this.price,
+          quantity: 1,
+          remaining: this.remaining,
+          type: this.type,
+          src: this.src
+        },{
+          headers: { token: this.$store.state.token }
+        });
+        this.showAdd = true;
+        this.$store.state.isLoading = true;
+        setTimeout(() => {
+          this.$store.state.isLoading = false;
+          this.showAdd = false;
+          this.$router.push("/dashboard/products");
+        }, 1000);
+      } catch (err) {
+        alert(err);
+        this.$store.state.isLoading = false;
+      }
     }
   }
 };

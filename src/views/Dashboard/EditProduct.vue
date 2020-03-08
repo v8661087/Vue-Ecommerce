@@ -55,19 +55,33 @@ export default {
       this.src = val.src;
       this.type = val.type;
       this.$store.state.isLoading = true;
-      await axios.patch(process.env.VUE_APP_PRODUCTS_URL + this.product._id, {
-        name: this.name,
-        price: this.price,
-        remaining: this.remaining,
-        src: this.src,
-        type: this.type
-      });
-      this.showUpdate = true;
-      this.$store.state.isLoading = false;
-      setTimeout(() => {
-        this.showUpdate = false;
-        this.$router.push("/dashboard/products");
-      }, 1000);
+      try {
+        await axios
+          .patch(
+            process.env.VUE_APP_PRODUCTS_URL + this.product._id,
+            {
+              name: this.name,
+              price: this.price,
+              remaining: this.remaining,
+              src: this.src,
+              type: this.type
+            },
+            {
+              headers: { token: this.$store.state.token }
+            }
+          )
+          .then(() => {
+            this.showUpdate = true;
+            this.$store.state.isLoading = false;
+            setTimeout(() => {
+              this.showUpdate = false;
+              this.$router.push("/dashboard/products");
+            }, 1000);
+          });
+      } catch (err) {
+        alert(err);
+        this.$store.state.isLoading = false;
+      }
     }
   }
 };

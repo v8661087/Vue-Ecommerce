@@ -103,6 +103,8 @@
       </div>
     </div>
     <div class="modal" v-show="showDelete">刪除成功</div>
+    <div class="modal" v-show="showAdd">新增成功</div>
+    <div class="modal" v-show="showUpdate">更新成功</div>
     <!-- Pagination -->
     <Pagination :currPage="currPage" :totalPage="totalPage" @setPage="setPage" />
   </div>
@@ -119,6 +121,8 @@ export default {
       showModal: false,
       showAlert: false,
       showDelete: false,
+      showAdd: false,
+      showUpdate: false,
       tempCoupon: {
         title: "coupon",
         code: "30off",
@@ -126,14 +130,14 @@ export default {
         percent: 30,
         is_enabled: true
       },
-      currPage: 1,
+      currPage: 1
     };
   },
   components: {
     Pagination
   },
   computed: {
-    ...mapState(["coupons", "itemOfPage","isLoading"]),
+    ...mapState(["coupons", "itemOfPage", "isLoading"]),
     totalPage() {
       return Math.ceil(this.coupons.length / this.itemOfPage);
     }
@@ -157,12 +161,33 @@ export default {
     async updateCoupon() {
       this.$store.state.isLoading = true;
       if (this.tempCoupon._id) {
-        await axios.patch(
-          process.env.VUE_APP_COUPONS_URL + this.tempCoupon._id,
-          this.tempCoupon
-        );
+        try {
+          await axios.patch(
+            process.env.VUE_APP_COUPONS_URL + this.tempCoupon._id,
+            this.tempCoupon,
+            {
+              headers: { token: this.$store.state.token }
+            }
+          );
+          this.showUpdate = true;
+          setTimeout(() => {
+            this.showUpdate = false;
+          }, 1000);
+        } catch (err) {
+          alert(err);
+        }
       } else {
-        await axios.post(process.env.VUE_APP_COUPONS_URL, this.tempCoupon);
+        try {
+          await axios.post(process.env.VUE_APP_COUPONS_URL, this.tempCoupon, {
+            headers: { token: this.$store.state.token }
+          });
+          this.showAdd = true;
+          setTimeout(() => {
+            this.showAdd = false;
+          }, 1000);
+        } catch (err) {
+          alert(err);
+        }
       }
       this.tempCoupon = {};
       this.getCoupons();
@@ -171,12 +196,19 @@ export default {
     async removeCoupon(item) {
       this.$store.state.isLoading = true;
       this.showAlert = false;
-      await axios.delete(process.env.VUE_APP_COUPONS_URL + item._id);
-      this.getCoupons();
-      this.showDelete = true;
-      setTimeout(()=>{
-        this.showDelete = false;
-      },1000)
+      try {
+        await axios.delete(process.env.VUE_APP_COUPONS_URL + item._id, {
+          headers: { token: this.$store.state.token }
+        });
+        this.getCoupons();
+        this.showDelete = true;
+        setTimeout(() => {
+          this.showDelete = false;
+        }, 1000);
+      } catch (err) {
+        alert(err);
+        this.$store.state.isLoading = false;
+      }
     },
     getCoupons() {
       this.$store.dispatch("getCoupons", process.env.VUE_APP_COUPONS_URL);
@@ -195,11 +227,11 @@ export default {
         this.tempCoupon = {};
       }
     }),
-    this.getCoupons();
+      this.getCoupons();
   },
-  updated(){
-    if(this.totalPage === 1 ){
-      this.currPage = 1
+  updated() {
+    if (this.totalPage === 1) {
+      this.currPage = 1;
     }
   }
 };

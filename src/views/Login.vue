@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -32,7 +33,43 @@ export default {
     };
   },
   methods: {
-    login() {
+    async login() {
+      this.loading = true;
+      try {
+        await axios
+          .post(process.env.VUE_APP_LOGIN_URL, {
+            email: this.email,
+            password: this.password
+          })
+          .then(res => {
+            this.$store.state.token = res.data.token;
+          });
+        setTimeout(() => {
+          this.$store.state.logining = true;
+          this.loading = false;
+          this.$router.push("/dashboard");
+        }, 500);
+      } catch (err) {
+        const accounts = this.$store.state.accounts;
+        let account = accounts.find(
+          item => item.email == this.email && item.password == this.password
+        );
+        if (account) {
+          this.loading = true;
+          this.$store.state.token = "";
+          setTimeout(() => {
+            this.$store.state.logining = true;
+            this.loading = false;
+            this.$router.push("/dashboard");
+          }, 500);
+        } else {
+          this.loading = false;
+          alert("錯誤");
+        }
+      }
+    }
+    /*login() {
+      
       const accounts = this.$store.state.accounts;
       let account = accounts.find(
         item => item.email == this.email && item.password == this.password
@@ -45,7 +82,7 @@ export default {
           this.$router.push("/dashboard");
         }, 500);
       }
-    }
+    }*/
   },
   computed: {
     account() {
