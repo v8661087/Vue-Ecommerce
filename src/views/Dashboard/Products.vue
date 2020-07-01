@@ -92,7 +92,7 @@ export default {
           this.showDelete = false;
         }, 1000);
       } catch (err) {
-        alert(err);
+        alert("此帳號無法進行操作");
         this.$store.state.isLoading = false;
       }
     },

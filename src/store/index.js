@@ -8,20 +8,32 @@ export default new Vuex.Store({
     accounts: [
       {
         email: "test@test.com",
-        password: "test"
-      }
+        password: "test",
+      },
     ],
-    token:"",
+    token: "",
     logining: false,
     form: {
       email: "123@test.com",
       username: "123",
       usertel: "123",
       useraddress: "123",
-      message: "留言測試"
+      message: "留言測試",
     },
     orders: [],
-    lists: ["全部", "火", "水", "草", "電", "冰", "龍"],
+    lists: [
+      "全部",
+      "火",
+      "水",
+      "草",
+      "電",
+      "冰",
+      "龍",
+      "鋼",
+      "飛行",
+      "一般",
+      "格鬥",
+    ],
     cart: [],
     get totalPrice() {
       return this.cart.reduce(
@@ -40,13 +52,13 @@ export default new Vuex.Store({
     },
     products: [],
     coupons: [],
-    itemOfPage: 9
+    itemOfPage: 9,
   },
   mutations: {
     addToCart(state, product) {
       const cart = state.cart;
-      if (cart.some(item => item._id === product._id)) {
-        const index = cart.findIndex(item => item._id === product._id);
+      if (cart.some((item) => item._id === product._id)) {
+        const index = cart.findIndex((item) => item._id === product._id);
         cart[index].quantity += product.quantity;
       } else {
         cart.push({ ...product });
@@ -76,40 +88,34 @@ export default new Vuex.Store({
     },
     COUPONS(state, payload) {
       state.coupons = payload;
-    }
+    },
   },
   actions: {
-    addToCartAction(context, payload) {
-      context.commit("addToCart", payload);
-    },
-    deleteProductAction(context, payload) {
-      context.commit("deleteProduct", payload);
-    },
-    getProducts(context, payload) {
-      context.commit("LOADING", true);
+    getProducts({ commit }, payload) {
+      commit("LOADING", true);
       const api = payload;
       axios.get(api).then(function(response) {
-        context.commit("PRODUCTS", response.data);
-        context.commit("LOADING", false);
+        commit("PRODUCTS", response.data);
+        commit("LOADING", false);
       });
     },
-    getOrders(context, payload) {
-      context.commit("LOADING", true);
+    getOrders({ commit }, payload) {
+      commit("LOADING", true);
       const api = payload;
       axios.get(api).then(function(response) {
-        context.commit("ORDERS", response.data);
-        context.commit("LOADING", false);
+        commit("ORDERS", response.data);
+        commit("LOADING", false);
       });
     },
-    getCoupons(context, payload) {
-      context.commit("LOADING", true);
+    getCoupons({ commit }, payload) {
+      commit("LOADING", true);
       const api = payload;
       axios.get(api).then(function(response) {
-        context.commit("COUPONS", response.data);
-        context.commit("LOADING", false);
+        commit("COUPONS", response.data);
+        commit("LOADING", false);
       });
-    }
+    },
   },
   getters: {},
-  modules: {}
+  modules: {},
 });

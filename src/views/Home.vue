@@ -70,7 +70,7 @@ export default {
       }
     },
     handleAdd(product) {
-      this.$store.dispatch("addToCartAction", product);
+      this.$store.commit("addToCart", product);
     },
     setPage(n) {
       if (this.currPage !== n) {
@@ -80,7 +80,7 @@ export default {
     },
     scrollToProducts() {
       const getHeight = document.getElementById("slider").scrollHeight;
-      window.scrollTo(0,getHeight)
+      window.scrollTo(0, getHeight);
     }
   },
   computed: {

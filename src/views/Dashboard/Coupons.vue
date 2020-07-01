@@ -40,7 +40,7 @@
         </tr>
       </tbody>
     </table>
-    <div class="modal" v-show="showDelete">刪除成功</div>
+
     <!-- Modal -->
     <div id="modal" v-show="showModal">
       <div class="modal-content">
@@ -174,7 +174,7 @@ export default {
             this.showUpdate = false;
           }, 1000);
         } catch (err) {
-          alert(err);
+          alert("此帳號無法進行操作");
         }
       } else {
         try {
@@ -186,7 +186,7 @@ export default {
             this.showAdd = false;
           }, 1000);
         } catch (err) {
-          alert(err);
+          alert("此帳號無法進行操作");
         }
       }
       this.tempCoupon = {};
@@ -206,7 +206,7 @@ export default {
           this.showDelete = false;
         }, 1000);
       } catch (err) {
-        alert(err);
+        alert("此帳號無法進行操作");
         this.$store.state.isLoading = false;
       }
     },

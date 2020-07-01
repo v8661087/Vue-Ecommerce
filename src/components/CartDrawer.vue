@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     handleDelete(item) {
-      this.$store.dispatch("deleteProductAction", item);
+      this.$store.commit("deleteProduct", item);
     }
   }
 };

@@ -66,7 +66,7 @@ export default {
         this.currQuantity = 1;
       }
       this.product.quantity = this.currQuantity;
-      this.$store.dispatch("addToCartAction", this.product);
+      this.$store.commit("addToCart", this.product);
     },
     handleChange() {
       const max = +this.product.remaining;

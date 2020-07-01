@@ -1,22 +1,23 @@
 .loading {
-    width: 90px;
-    height: 90px;
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    margin-top: -45px;
-    margin-left: -45px;
-    border: 3px solid #3a3;
-    border-right: 3px solid #fff;
-    border-bottom: 3px solid #fff;
-    border-radius: 50%;
-    animation: loading 1s infinite linear;
+  width: 90px;
+  height: 90px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-top: -45px;
+  margin-left: -45px;
+  border: 3px solid #3a3;
+  border-right: 3px solid #fff;
+  border-bottom: 3px solid #fff;
+  border-radius: 50%;
+  animation: loading 1s infinite linear;
+  z-index: 999;
+}
+@keyframes loading {
+  from {
+    transform: rotate(0deg);
   }
-  @keyframes loading {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+  to {
+    transform: rotate(360deg);
   }
+}

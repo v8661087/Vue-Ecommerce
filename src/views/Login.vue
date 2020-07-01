@@ -16,7 +16,7 @@
           autocomplete="off"
         />
       </div>
-      <input type="submit" value="登入" ref="button" />
+      <input type="submit" value="登入" />
     </form>
     <div class="loading" v-show="loading"></div>
   </div>
@@ -52,7 +52,7 @@ export default {
       } catch (err) {
         const accounts = this.$store.state.accounts;
         let account = accounts.find(
-          item => item.email == this.email && item.password == this.password
+          item => item.email === this.email && item.password === this.password
         );
         if (account) {
           this.loading = true;
@@ -64,7 +64,7 @@ export default {
           }, 500);
         } else {
           this.loading = false;
-          alert("錯誤");
+          alert("Email或Password錯誤");
         }
       }
     }

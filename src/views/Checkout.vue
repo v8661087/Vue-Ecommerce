@@ -17,7 +17,7 @@
       <button v-if="!status" @click="handlePayment">立即付款</button>
     </div>
     <div v-else>
-      <Form :form="form" :paymentStatus="order.paymentStatus" />
+      <OrderForm :form="form" :paymentStatus="order.paymentStatus" />
       <router-link to="/">
         <button class="step__normal">&lt;&lt; 繼續購物</button>
       </router-link>

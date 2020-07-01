@@ -43,16 +43,20 @@ export default {
       this.type = val.type;
       this.$store.state.isLoading = true;
       try {
-        await axios.post(process.env.VUE_APP_PRODUCTS_URL, {
-          name: this.name,
-          price: this.price,
-          quantity: 1,
-          remaining: this.remaining,
-          type: this.type,
-          src: this.src
-        },{
-          headers: { token: this.$store.state.token }
-        });
+        await axios.post(
+          process.env.VUE_APP_PRODUCTS_URL,
+          {
+            name: this.name,
+            price: this.price,
+            quantity: 1,
+            remaining: this.remaining,
+            type: this.type,
+            src: this.src
+          },
+          {
+            headers: { token: this.$store.state.token }
+          }
+        );
         this.showAdd = true;
         this.$store.state.isLoading = true;
         setTimeout(() => {
@@ -61,7 +65,7 @@ export default {
           this.$router.push("/dashboard/products");
         }, 1000);
       } catch (err) {
-        alert(err);
+        alert("此帳號無法進行操作");
         this.$store.state.isLoading = false;
       }
     }

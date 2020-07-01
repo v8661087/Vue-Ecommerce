@@ -17,7 +17,7 @@
           :key="order.id"
         >
           <td>{{order.date}}</td>
-          <td>{{order._id}}</td>
+          <td>{{order.id}}</td>
           <td>
             <span class="text-success" v-if="order.paymentStatus">已付款</span>
             <span class="text-failure" v-else>未付款</span>
@@ -36,19 +36,19 @@
 </template>
 
 <script>
-import Pagination from "@/components/Pagination.vue"
-import {mapState} from "vuex"
+import Pagination from "@/components/Pagination.vue";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
       currPage: 1
     };
   },
-  components:{
+  components: {
     Pagination
   },
   computed: {
-    ...mapState(['orders','itemOfPage','isLoading']),
+    ...mapState(["orders", "itemOfPage", "isLoading"]),
     totalPage() {
       return Math.ceil(this.orders.length / this.itemOfPage);
     },
@@ -67,10 +67,10 @@ export default {
     },
     fetchOrders() {
       this.$store.dispatch("getOrders", process.env.VUE_APP_ORDERS_URL);
-    },
+    }
   },
-  created(){
-    this.fetchOrders()
+  created() {
+    this.fetchOrders();
   }
 };
 </script>

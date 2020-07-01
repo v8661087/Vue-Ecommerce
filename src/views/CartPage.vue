@@ -11,7 +11,7 @@
       <div class="cart-information">
         <div class="cart-item">
           <div class="cart-item__action">
-            <button @click="clearAll">全部清除</button>
+            <button @click="clearAll">清除</button>
           </div>
           <div class="cart-item__name">商品</div>
           <div class="cart-item__quantity">數量</div>
@@ -71,36 +71,41 @@ export default {
   computed: { ...mapState(["cart", "totalPrice", "discountPrice"]) },
   methods: {
     handleDelete(product) {
-      this.$store.dispatch("deleteProductAction", product);
+      this.$store.commit("deleteProduct", product);
     },
     clearAll() {
       this.$store.state.cart = [];
       localStorage.setItem("cart", JSON.stringify(this.cart));
     },
-    submitCoupon() {
-      this.isLoading = true;
-      const index = this.$store.state.coupons.findIndex(
-        item => item.code === this.couponCode
-      );
-      setTimeout(() => {
-        if (index !== -1) {
-          const foundCoupon = this.$store.state.coupons[index];
-          const today = new Date().getTime();
-          if (!foundCoupon.is_enabled) {
-            alert("找不到優惠券"); //未啟用
-          } else if (new Date(foundCoupon.due_date).getTime() <= today) {
-            alert("優惠券已過期"); //過期
+    submitCoupon(e) {
+      if (this.couponCode === "") {
+        e.target.previousElementSibling.focus();
+      } else {
+        this.isLoading = true;
+        const index = this.$store.state.coupons.findIndex(
+          item => item.code === this.couponCode
+        );
+        setTimeout(() => {
+          if (index !== -1) {
+            const foundCoupon = this.$store.state.coupons[index];
+            const today = new Date().getTime();
+            if (!foundCoupon.is_enabled) {
+              alert("找不到優惠券"); //未啟用
+            } else if (new Date(foundCoupon.due_date).getTime() <= today) {
+              alert("優惠券已過期"); //過期
+            } else {
+              this.$store.state.percentDiscount = this.$store.state.coupons[
+                index
+              ].percent;
+              this.couponCode = "";
+            }
           } else {
-            this.$store.state.percentDiscount = this.$store.state.coupons[
-              index
-            ].percent;
+            alert("找不到優惠券");
+            this.$store.state.percentDiscount = null;
           }
-        } else {
-          alert("找不到優惠券");
-          this.$store.state.percentDiscount = null;
-        }
-        this.isLoading = false;
-      }, 1000);
+          this.isLoading = false;
+        }, 1000);
+      }
     }
   }
 };

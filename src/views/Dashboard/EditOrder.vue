@@ -3,10 +3,7 @@
     <h1>訂單編號: {{order.id}}</h1>
     <div>日期: {{order.date}}</div>
     <div class="cart-information">
-      <CartItem  
-      :cart="cart"
-      :totalPrice="totalPrice" 
-      :discountPrice="discountPrice" />
+      <CartItem :cart="cart" :totalPrice="totalPrice" :discountPrice="discountPrice" />
     </div>
     <OrderForm :form="form" :paymentStatus="order.paymentStatus" />
   </div>

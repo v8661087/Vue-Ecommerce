@@ -36,10 +36,10 @@
     border-radius: 5px;
     z-index: 999999;
     .link {
-        background: #2079ee;
-        padding: 9px 12px;
-        text-align: center;
-      }
+      background: #2079ee;
+      padding: 9px 12px;
+      text-align: center;
+    }
   }
   &-item {
     width: 100%;
@@ -52,10 +52,10 @@
       width: 39px;
     }
     &__name {
-      width: 120px;
+      width: 132px;
     }
     &__total {
-      width: 90px;
+      min-width: 120px;
       text-align: right;
       b {
         color: #5bee22;
