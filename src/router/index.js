@@ -8,7 +8,7 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: Home
+    component: Home,
   },
   {
     path: "/cart",
@@ -17,27 +17,32 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/CartPage.vue")
+      import(/* webpackChunkName: "about" */ "../views/CartPage.vue"),
   },
   {
     path: "/createorder",
     name: "createorder",
-    component: () => import("../views/CreateOrder.vue")
+    component: () => import("../views/CreateOrder.vue"),
   },
   {
     path: "/checkout/:id",
     name: "checkout",
-    component: () => import("../views/Checkout.vue")
+    component: () => import("../views/Checkout.vue"),
   },
   {
     path: "/product-detail/:id",
     name: "prduct-detail",
-    component: () => import("../views/ProductDetail.vue")
+    component: () => import("../views/ProductDetail.vue"),
   },
   {
     path: "/login",
     name: "login",
-    component: () => import("../views/Login.vue")
+    component: () => import("../views/Login.vue"),
+  },
+  {
+    path: "/game",
+    name: "game",
+    component: () => import("../views/Game.vue"),
   },
   {
     path: "/dashboard",
@@ -47,53 +52,53 @@ const routes = [
         path: "",
         name: "dashboard",
         component: () => import("../views/Dashboard/Index.vue"),
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: true },
       },
       {
         path: "products",
         name: "products",
         component: () => import("../views/Dashboard/Products.vue"),
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: true },
       },
       {
         path: "new",
         name: "new",
         component: () => import("../views/Dashboard/New.vue"),
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: true },
       },
       {
         path: "edit/:id",
         name: "edit",
         component: () => import("../views/Dashboard/EditProduct.vue"),
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: true },
       },
       {
         path: "orders",
         name: "orders",
         component: () => import("../views/Dashboard/Orders.vue"),
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: true },
       },
       {
         path: "order/:id",
         name: "order",
         component: () => import("../views/Dashboard/EditOrder.vue"),
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: true },
       },
       {
         path: "coupons",
         name: "coupons",
         component: () => import("../views/Dashboard/Coupons.vue"),
-        meta: { requiresAuth: true }
-      }
-    ]
-  }
+        meta: { requiresAuth: true },
+      },
+    ],
+  },
 ];
 
 const router = new VueRouter({
   scrollBehavior() {
     return { x: 0, y: 0 };
   },
-  routes
+  routes,
 });
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {

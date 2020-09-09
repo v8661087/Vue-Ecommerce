@@ -5,6 +5,7 @@
     </router-link>
     <router-link to="/">Home</router-link>|
     <router-link to="/cart">購物車({{cart.length}})</router-link>|
+    <router-link to="/game">Game</router-link>|
     <router-link v-if="!logining" to="/login">登入</router-link>
     <router-link v-else to="/dashboard">Dashboard</router-link>
     <span v-show="logining">|</span>
@@ -22,8 +23,8 @@ export default {
         this.$store.state.logining = false;
         this.$router.push("/login");
       }, 500);
-    }
-  }
+    },
+  },
 };
 </script>
 
