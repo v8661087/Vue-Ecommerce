@@ -1,14 +1,4 @@
 #nav {
-  #logo {
-    display: flex;
-    margin: 0 2% 0 1%;
-    color: #0091ff;
-    align-items: center;
-    img {
-      width: 21px;
-      padding-right: 3px;
-    }
-  }
   position: fixed;
   top: 0;
   left: 0;
@@ -19,11 +9,28 @@
   display: flex;
   align-items: center;
   z-index: 2;
+  border-bottom: 3px solid gray;
+  #logo {
+    display: flex;
+    margin: 0 2% 0 1%;
+    color: #0091ff;
+    align-items: center;
+    img {
+      width: 21px;
+      padding-right: 3px;
+    }
+  }
   a {
     font-weight: bold;
     text-decoration: none;
     color: white;
     cursor: pointer;
+    display: inline-block;
+    padding: 3px 9px;
+    &:hover {
+      text-decoration: underline;
+      color: #0091ff;
+    }
     &.router-link-exact-active {
       color: #42b983;
     }
