@@ -1,6 +1,6 @@
 <template>
   <div class="product">
-    <img :src="product.src" :alt="product.name" />
+    <img v-lazy="product.src" :alt="product.name" />
     <div>{{product.name}}</div>
     <div>${{product.price}}</div>
     <div>
@@ -16,13 +16,13 @@
 export default {
   name: "Product",
   props: {
-    product: Object
+    product: Object,
   },
   methods: {
     handleAdd() {
       this.$emit("add");
-    }
-  }
+    },
+  },
 };
 </script>
 

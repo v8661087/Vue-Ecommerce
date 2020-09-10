@@ -4,7 +4,6 @@
     <main>
       <!-- List -->
       <div class="type">
-        <span>屬性</span>
         <ul>
           <List
             v-for="(list,index) in lists"
@@ -50,7 +49,7 @@ export default {
   data() {
     return {
       currtype: "全部",
-      currPage: 1
+      currPage: 1,
     };
   },
   components: {
@@ -59,7 +58,7 @@ export default {
     Product,
     Pagination,
     CartDrawer,
-    Footer
+    Footer,
   },
   methods: {
     handleActive(list) {
@@ -81,22 +80,22 @@ export default {
     scrollToProducts() {
       const getHeight = document.getElementById("slider").scrollHeight;
       window.scrollTo(0, getHeight);
-    }
+    },
   },
   computed: {
     ...mapState(["lists", "products", "cart", "itemOfPage"]),
-    filteredProducts: function() {
+    filteredProducts: function () {
       if (this.currtype === "全部") {
         return this.products;
       }
       return this.products.filter(
-        item => item.type.indexOf(this.currtype) > -1
+        (item) => item.type.indexOf(this.currtype) > -1
       );
     },
     totalPage() {
       return Math.ceil(this.filteredProducts.length / this.itemOfPage);
-    }
-  }
+    },
+  },
 };
 </script>
 

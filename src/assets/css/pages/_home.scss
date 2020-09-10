@@ -50,7 +50,6 @@
     .type {
       max-width: 100%;
       width: 100%;
-      padding: 9px 0;
       ul {
         display: flex;
         flex-wrap: wrap;
@@ -59,7 +58,8 @@
         padding: 0;
         align-items: center;
         .list-type {
-          padding: 15px;
+          padding: 9px;
+          margin: 3px;
         }
       }
     }
