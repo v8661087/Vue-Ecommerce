@@ -28,26 +28,26 @@ export default {
         loop: true,
         speed: 300,
         autoplay: {
-          delay: 3000
+          delay: 3000,
         },
         slidesPerView: "auto",
         centeredSlides: true,
         spaceBetween: 20,
         pagination: {
           el: ".swiper-pagination",
-          clickable: true
+          clickable: true,
         },
         navigation: {
           nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev"
-        }
-      }
+          prevEl: ".swiper-button-prev",
+        },
+      },
     };
   },
   components: {
     swiper,
-    swiperSlide
-  }
+    swiperSlide,
+  },
 };
 </script>
 
@@ -69,7 +69,7 @@ export default {
     background-position: center center;
     background-size: cover;
     &.slide-1 {
-      background-image: url("../assets/slider1.png");
+      background-image: url("../assets/slider1.jpg");
     }
     &.slide-2 {
       background-image: url("../assets/slider2.jpg");
