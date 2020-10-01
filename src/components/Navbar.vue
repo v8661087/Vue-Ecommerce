@@ -1,12 +1,17 @@
 <template>
   <nav id="nav">
-    <router-link style="text-decoration:none" id="logo" to="/">
+    <router-link
+      @click.native="scrollToTop"
+      style="text-decoration: none"
+      id="logo"
+      to="/"
+    >
       <img src="../assets/pokeball.png" alt="pokeball" />Pokemon
     </router-link>
-    <router-link to="/">首頁</router-link>
+    <router-link @click.native="scrollToTop" to="/">首頁</router-link>
     <router-link to="/about">關於</router-link>
-    <router-link to="/game">Game</router-link>
-    <router-link to="/cart">購物車({{cart.length}})</router-link>
+    <router-link to="/game">遊戲</router-link>
+    <router-link to="/cart">購物車({{ cart.length }})</router-link>
     <router-link v-if="!logining" to="/login">登入</router-link>
     <router-link v-else to="/dashboard">Dashboard</router-link>
     <a v-if="logining" @click="logout">登出</a>
@@ -15,7 +20,7 @@
 
 <script>
 export default {
-  name: "Navber",
+  name: "Navbar",
   props: { logining: Boolean, cart: Array },
   methods: {
     logout() {
@@ -23,6 +28,11 @@ export default {
         this.$store.state.logining = false;
         this.$router.push("/login");
       }, 500);
+    },
+    scrollToTop(e) {
+      if (this.$route.path === e.target.pathname) {
+        window.scroll(0, 0);
+      }
     },
   },
 };

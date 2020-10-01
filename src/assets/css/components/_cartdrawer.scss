@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   position: fixed;
-  background: #2079ee;
+  background: $blue;
   border-radius: 50%;
   right: 30px;
   bottom: 30px;
@@ -21,7 +21,7 @@
     position: absolute;
     right: 0;
     top: 0;
-    background: #ad0026;
+    background: $darkred;
     text-align: center;
   }
   &-items {
@@ -29,14 +29,14 @@
     overflow: auto;
     padding: 9px 15px;
     position: fixed;
-    background: #17181c;
+    background: $black;
     right: 39px;
     bottom: 111px;
-    border: 1px solid gray;
+    border: 1px solid $gray;
     border-radius: 5px;
     z-index: 999999;
     .link {
-      background: #2079ee;
+      background: $blue;
       padding: 9px 12px;
       text-align: center;
     }
@@ -58,7 +58,7 @@
       min-width: 120px;
       text-align: right;
       b {
-        color: #5bee22;
+        color: $green;
       }
       div {
         text-align: right;
@@ -68,7 +68,7 @@
       }
     }
     &:hover {
-      background: #2c2e36;
+      background: $lightgray;
     }
   }
   &__empty {
@@ -89,5 +89,5 @@
   height: 0;
   border-style: solid;
   border-width: 21px 21px 0 21px;
-  border-color: #5bee22 transparent transparent transparent;
+  border-color: $green transparent transparent transparent;
 }

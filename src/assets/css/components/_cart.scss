@@ -2,6 +2,7 @@
   &-header {
     display: flex;
     justify-content: center;
+    padding-top: 9px;
     div {
       padding: 2% 3%;
     }
@@ -12,7 +13,7 @@
   }
   &-item {
     height: 90px;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid $gray;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -22,7 +23,7 @@
       span {
         cursor: pointer;
         &:hover {
-          color: red;
+          color: $red;
         }
       }
     }
@@ -32,6 +33,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
+
       div {
         margin: 0 auto;
       }
@@ -47,35 +49,32 @@
     }
     img {
       width: 90px;
+      @include phone-width {
+        width: 60px;
+      }
     }
   }
   &__empty {
     img {
-      padding-top: 30px;
-      width: 300px;
+      padding-top: 15px;
+      width: 270px;
     }
   }
   &-action {
+    width: 100%;
     max-width: 810px;
     display: flex;
     align-items: center;
-    margin: 0 auto;
-    height: 69px;
     justify-content: space-between;
+    padding: 6px 0;
+    margin: 0 auto;
   }
 }
-.total-price{
+.total-price {
   display: flex;
   justify-content: flex-end;
-  padding-right: 30px
+  padding-right: 30px;
 }
-.discount{
-  color:#34eb34
-}
-@media (max-width: 500px) {
-  .cart-item__name {
-    img {
-      width: 60px;
-    }
-  }
+.discount {
+  color: $green;
 }

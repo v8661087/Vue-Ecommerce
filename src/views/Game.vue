@@ -3,7 +3,7 @@
     <h1>完成翻牌配對遊戲即可獲得優惠券代碼</h1>
     <div class="cards">
       <Card
-        v-for="(card,index) in cards"
+        v-for="(card, index) in cards"
         :card="card"
         :key="index"
         @flip="flipCard(card)"
@@ -102,9 +102,4 @@ export default {
 </script>
 
 <style>
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
 </style>

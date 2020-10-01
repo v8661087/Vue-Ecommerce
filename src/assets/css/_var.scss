@@ -1,0 +1,19 @@
+$black: #17181c;
+$white: #fff;
+$lightgray: #2c2e36;
+$gray: gray;
+$blue: #167bff;
+$darkblue: #005bd3;
+$lightblue: rgb(0, 134, 196);
+$red: red;
+$darkred: rgb(173, 0, 0);
+$green: rgb(0, 216, 18);
+$darkgreen: rgb(64, 142, 33);
+$lightgreen: rgb(0, 255, 128);
+
+$phone-media: 500px;
+@mixin phone-width() {
+  @media all and (max-width: $phone-media) {
+    @content;
+  }
+}

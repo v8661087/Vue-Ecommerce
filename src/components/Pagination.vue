@@ -1,30 +1,31 @@
 <template>
-  <nav style="margin-bottom:30px" v-if="totalPage>1">
+  <nav style="margin-bottom: 30px" v-if="totalPage > 1">
     <ul class="pagination">
-      <li class="page-item">
+      <li>
         <a
-          class="page-link"
-          @click.prevent="setPage(currPage-1)"
-          :class="{'disabled':currPage===1}"
+          class="pagination-link"
+          @click.prevent="setPage(currPage - 1)"
+          :class="{ disabled: currPage === 1 }"
           href="#"
         >
           <span>&laquo;</span>
         </a>
       </li>
-      <li class="page-item" v-for="n in totalPage" :key="n">
+      <li v-for="n in totalPage" :key="n">
         <a
-          class="page-link"
-          v-bind:class="{'active disabled': (currPage === (n))}"
+          class="pagination-link"
+          v-bind:class="{ 'active disabled': currPage === n }"
           href="#"
           @click.prevent="setPage(n)"
-        >{{n}}</a>
+          >{{ n }}</a
+        >
       </li>
-      <li class="page-item">
+      <li>
         <a
-          class="page-link"
+          class="pagination-link"
           href="#"
-          @click.prevent="setPage(currPage+1)"
-          :class="{'disabled':currPage===totalPage}"
+          @click.prevent="setPage(currPage + 1)"
+          :class="{ disabled: currPage === totalPage }"
         >
           <span>&raquo;</span>
         </a>
@@ -38,13 +39,13 @@ export default {
   name: "Pagination",
   props: {
     currPage: Number,
-    totalPage: Number
+    totalPage: Number,
   },
   methods: {
     setPage(payload) {
       this.$emit("setPage", payload);
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -7,19 +7,23 @@
     </div>
     <h1>訂單資訊</h1>
     <div class="cart-information">
-      <CartItem :cart="cart" :totalPrice="totalPrice" :discountPrice="discountPrice" />
+      <CartItem
+        :cart="cart"
+        :totalPrice="totalPrice"
+        :discountPrice="discountPrice"
+      />
     </div>
     <div v-if="!order.paymentStatus">
       <OrderForm :form="form" :paymentStatus="status" />
       <router-link to="/">
-        <button class="step__normal">&lt;&lt; 繼續購物</button>
+        <button class="step__shopping">&lt;&lt; 繼續購物</button>
       </router-link>
       <button v-if="!status" @click="handlePayment">立即付款</button>
     </div>
     <div v-else>
       <OrderForm :form="form" :paymentStatus="order.paymentStatus" />
       <router-link to="/">
-        <button class="step__normal">&lt;&lt; 繼續購物</button>
+        <button class="step__shopping">&lt;&lt; 繼續購物</button>
       </router-link>
     </div>
   </div>
@@ -33,13 +37,13 @@ export default {
   components: { CartItem, OrderForm },
   data() {
     return {
-      status: false
+      status: false,
     };
   },
   computed: {
     order() {
       return this.$store.state.orders.find(
-        item => item.id == this.$route.params.id
+        (item) => item.id == this.$route.params.id
       );
     },
     cart() {
@@ -56,7 +60,7 @@ export default {
     },
     discountPrice() {
       return this.order.discountPrice;
-    }
+    },
   },
   methods: {
     handlePayment() {
@@ -65,14 +69,14 @@ export default {
         axios.patch(process.env.VUE_APP_ORDERS_URL + this.order._id, {
           cart: this.order.cart,
           form: this.order.form,
-          paymentStatus: true
+          paymentStatus: true,
         });
       }, 500);
-    }
+    },
   },
   created() {
     this.$store.dispatch("getOrders", process.env.VUE_APP_ORDERS_URL);
-  }
+  },
 };
 </script>
 

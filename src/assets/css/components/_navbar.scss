@@ -9,12 +9,18 @@
   display: flex;
   align-items: center;
   z-index: 2;
-  border-bottom: 3px solid gray;
+  border-bottom: 3px solid $gray;
+  @include phone-width {
+    padding: 9px;
+  }
   #logo {
     display: flex;
     margin: 0 2% 0 1%;
-    color: #0091ff;
+    color: $blue;
     align-items: center;
+    @include phone-width {
+      display: none;
+    }
     img {
       width: 39px;
       padding-right: 6px;
@@ -29,17 +35,10 @@
     padding: 3px 9px;
     &:hover {
       text-decoration: underline;
-      color: #0091ff;
+      color: $blue;
     }
     &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-@media (max-width: 480px) {
-  #nav {
-    #logo {
-      display: none;
+      color: $green;
     }
   }
 }

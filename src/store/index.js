@@ -41,14 +41,9 @@ export default new Vuex.Store({
         0
       );
     },
-    percentDiscount: null,
+    percentDiscount: 0,
     get discountPrice() {
-      if (this.percentDiscount) {
-        return Math.round(
-          (this.totalPrice * (100 - this.percentDiscount)) / 100
-        );
-      }
-      return false;
+      return Math.round((this.totalPrice * (100 - this.percentDiscount)) / 100);
     },
     products: [],
     coupons: [],

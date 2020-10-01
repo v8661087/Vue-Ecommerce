@@ -1,6 +1,10 @@
 <template>
   <div class="cart">
-    <loading :active.sync="isLoading" :color="'white'" :background-color="'#17181c'"></loading>
+    <loading
+      :active.sync="isLoading"
+      :color="'white'"
+      :background-color="'#17181c'"
+    ></loading>
     <div v-if="cart.length">
       <div class="cart-header">
         <div class="active">1.確認購買清單</div>
@@ -24,14 +28,21 @@
           </div>
           <div class="cart-item__name">
             <img :src="product.src" :alt="product.name" />
-            <div>{{product.name}}</div>
+            <div>{{ product.name }}</div>
           </div>
-          <div class="cart-item__quantity">{{product.quantity}}</div>
-          <div class="cart-item__price">${{product.price}}</div>
-          <div class="cart-item__total">${{product.quantity * product.price}}</div>
+          <div class="cart-item__quantity">{{ product.quantity }}</div>
+          <div class="cart-item__price">${{ product.price }}</div>
+          <div class="cart-item__total">
+            ${{ product.quantity * product.price }}
+          </div>
         </div>
-        <div class="cart-item total-price">總計金額 ${{totalPrice}}</div>
-        <div class="cart-item total-price discount" v-show="discountPrice">折扣後金額 ${{discountPrice}}</div>
+        <div class="cart-item total-price">總計金額 ${{ totalPrice }}</div>
+        <div
+          class="cart-item total-price discount"
+          v-show="discountPrice !== totalPrice"
+        >
+          折扣後金額 ${{ discountPrice }}
+        </div>
         <div class="coupon">
           <input type="text" v-model="couponCode" placeholder="請輸入優惠碼" />
           <input type="button" value="套用優惠碼" @click="submitCoupon" />
@@ -39,10 +50,10 @@
       </div>
       <div class="cart-action">
         <router-link to="/">
-          <button class="step__normal">&lt;&lt; 繼續購物</button>
+          <button class="step__shopping">&lt;&lt; 繼續購物</button>
         </router-link>
         <router-link to="/createorder">
-          <button class="step__blue">下一步：填寫收件資料</button>
+          <button class="step__primary">下一步：填寫收件資料</button>
         </router-link>
       </div>
     </div>
@@ -51,7 +62,7 @@
       <img src="../assets/smile.png" alt />
       <div>
         <router-link to="/">
-          <button class="step__normal">&lt;&lt; 繼續購物</button>
+          <button class="step__shopping">&lt;&lt; 繼續購物</button>
         </router-link>
       </div>
     </div>
@@ -65,7 +76,7 @@ export default {
   data() {
     return {
       couponCode: "30off",
-      isLoading: false
+      isLoading: false,
     };
   },
   computed: { ...mapState(["cart", "totalPrice", "discountPrice"]) },
@@ -83,7 +94,7 @@ export default {
       } else {
         this.isLoading = true;
         const index = this.$store.state.coupons.findIndex(
-          item => item.code === this.couponCode
+          (item) => item.code === this.couponCode
         );
         setTimeout(() => {
           if (index !== -1) {
@@ -106,8 +117,8 @@ export default {
           this.isLoading = false;
         }, 1000);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -1,0 +1,19 @@
+.about-logo {
+  width: 180px;
+  transition: 1s;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px 0 $lightgreen, 0 6px 20px 0 $lightgreen;
+  animation: zoom 3s infinite;
+}
+
+@keyframes zoom {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

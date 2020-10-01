@@ -1,34 +1,24 @@
-h1 {
-  word-wrap: break-word;
-}
-$phone-media: 480px;
-@mixin phone-width() {
-  @media all and (max-width: $phone-media) {
-    @content;
-  }
-}
 .dashboard {
   display: flex;
-  justify-content: center;
+  min-height: calc(100vh - 66px);
   @include phone-width {
-    display: block;
+    flex-direction: column;
   }
   &-action {
     max-width: 180px;
     width: 100%;
-    min-height: calc( 100vh - 63px);
-    border-right: 1px solid gray;
-    background: #494949;
-    h3{
-      @include phone-width{
-        margin: 0;
-      }
-    }
+    border-right: 1px solid $gray;
+    background: $lightgray;
     @include phone-width {
       max-width: none;
       border-right: none;
-      border-bottom: 1px solid gray;
-      min-height: 100%;
+      border-bottom: 1px solid $gray;
+      padding-top: 9px;
+    }
+    h3 {
+      @include phone-width {
+        margin: 0;
+      }
     }
     ul {
       @include phone-width {
@@ -40,9 +30,15 @@ $phone-media: 480px;
           display: block;
           text-align: left;
           padding: 9px 18px;
+          @include phone-width {
+            padding: 9px 6px;
+          }
+          &:hover {
+            color: $lightblue;
+          }
         }
         a.router-link-active {
-          color: rgb(0, 183, 255);
+          color: $blue;
         }
         @include phone-width {
           padding: 3px;
@@ -52,9 +48,13 @@ $phone-media: 480px;
   }
   &-view {
     width: 100%;
-    min-width: 240px;
-    min-height: calc( 100vh - 63px);
-    background: #252525;
+    background: $lightgray;
+    @include phone-width {
+      min-height: calc(100vh - 66px - 89px);
+    }
+    h1 {
+      word-wrap: break-word;
+    }
     table {
       word-break: break-all;
       word-wrap: break-all;
@@ -68,19 +68,19 @@ svg {
 }
 button {
   &.new {
-    &:hover{
-      background: rgb(0, 110, 255);
+    &:hover {
+      background: $blue;
     }
   }
   &.edit {
-    background: rgb(73, 73, 73);
+    background: $gray;
     padding: 6px 12px;
   }
   &.delete {
-    background: red;
+    background: $red;
     padding: 6px 12px;
     &:hover {
-      color: white;
+      color: $white;
     }
   }
 }

@@ -1,0 +1,25 @@
+.pagination {
+  margin: 15px 0;
+  display: flex;
+  justify-content: center;
+  &-link {
+    display: block;
+    padding: 9px 18px;
+    color: $lightblue;
+    background-color: $black;
+    border: 1px solid $gray;
+    &:hover {
+      background-color: #373a42;
+    }
+    &.active {
+      color: $white;
+      background: $lightblue;
+      &:hover {
+        background: $lightblue;
+      }
+    }
+    &.disabled {
+      pointer-events: none;
+    }
+  }
+}
