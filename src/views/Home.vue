@@ -6,8 +6,8 @@
       <div class="type">
         <ul>
           <List
-            v-for="(list,index) in lists"
-            :class="{'active': list === currtype}"
+            v-for="(list, index) in lists"
+            :class="{ active: list === currtype }"
             :list="list"
             :key="index"
             @active="handleActive"
@@ -18,7 +18,10 @@
       <!-- Product -->
       <div class="products">
         <Product
-          v-for="product in filteredProducts.slice((currPage-1)*itemOfPage,currPage*itemOfPage)"
+          v-for="product in filteredProducts.slice(
+            (currPage - 1) * itemOfPage,
+            currPage * itemOfPage
+          )"
           :product="product"
           :key="product._id"
           @add="handleAdd(product)"
@@ -26,7 +29,11 @@
       </div>
     </main>
     <!-- Pagination -->
-    <Pagination :currPage="currPage" :totalPage="totalPage" @setPage="setPage" />
+    <Pagination
+      :currPage="currPage"
+      :totalPage="totalPage"
+      @setPage="setPage"
+    />
     <!-- CartDrawer -->
     <CartDrawer :cart="cart" />
     <!-- popup -->
@@ -45,6 +52,21 @@ import CartDrawer from "@/components/CartDrawer.vue";
 import Footer from "@/components/Footer.vue";
 import { mapState } from "vuex";
 export default {
+  metaInfo: {
+    title: "vue-ecommerce",
+    meta: [
+      {
+        // set meta
+        name: "keyWords",
+        content: "vue-ecommerce v8661087 StevenKuo",
+      },
+      {
+        name: "description",
+        content:
+          "vue-ecommerce電商網站，使用技術vue-router、vuex、vue-awesome-swiper、vue-lazyload、vue-loading-overlay、vue-meta-info。",
+      },
+    ],
+  },
   name: "home",
   data() {
     return {

@@ -6,6 +6,8 @@ import store from "./store";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 import VueLazyload from "vue-lazyload";
+import MetaInfo from "vue-meta-info";
+Vue.use(MetaInfo);
 Vue.component("Loading", Loading);
 Vue.use(VueLazyload);
 
