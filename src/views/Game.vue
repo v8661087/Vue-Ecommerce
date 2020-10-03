@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>完成翻牌配對遊戲即可獲得優惠券代碼</h1>
+    <h2 v-if="clear">優惠券代碼:30off</h2>
     <div class="cards">
       <Card
         v-for="(card, index) in cards"
@@ -10,7 +11,6 @@
         :lockBoard="lockBoard"
       />
     </div>
-    <p v-if="clear">優惠券代碼:30off</p>
   </div>
 </template>
 

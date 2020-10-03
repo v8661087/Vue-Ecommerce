@@ -19,7 +19,11 @@
     justify-content: space-between;
     text-align: center;
     &__action {
-      width: 120px;
+      width: 100%;
+      max-width: 120px;
+      @include phone-width {
+        max-width: 60px;
+      }
       span {
         cursor: pointer;
         &:hover {
@@ -74,6 +78,9 @@
   display: flex;
   justify-content: flex-end;
   padding-right: 30px;
+  @include phone-width {
+    padding: 0;
+  }
 }
 .discount {
   color: $green;

@@ -25,6 +25,7 @@
     text-align: center;
   }
   &-items {
+    width: 360px;
     max-height: 336px;
     overflow: auto;
     padding: 9px 15px;
@@ -35,6 +36,10 @@
     border: 1px solid $gray;
     border-radius: 5px;
     z-index: 999999;
+    @include phone-width {
+      width: 70vw;
+      max-height: 70vh;
+    }
     .link {
       background: $blue;
       padding: 9px 12px;
@@ -52,10 +57,10 @@
       width: 39px;
     }
     &__name {
-      width: 132px;
+      width: 100%;
     }
     &__total {
-      min-width: 120px;
+      width: 100%;
       text-align: right;
       b {
         color: $green;
