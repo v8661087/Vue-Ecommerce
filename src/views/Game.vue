@@ -76,6 +76,7 @@ export default {
       this.count++;
       if (this.count === this.max) {
         this.clear = true;
+        window.scroll(0, 0);
       }
       this.resetBoard();
     },

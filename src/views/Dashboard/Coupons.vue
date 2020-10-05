@@ -1,45 +1,49 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" :color="'white'" :background-color="'#17181c'"></loading>
+    <loading
+      :active.sync="isLoading"
+      :color="'white'"
+      :background-color="'#17181c'"
+    ></loading>
     <h1>Coupons</h1>
-    <button class="new" @click="showModal=true">建立新優惠券</button>
+    <button class="new" @click="showModal = true">建立新優惠券</button>
     <!-- Coupons -->
-    <table>
-      <thead>
-        <tr>
-          <th width="21%">優惠券</th>
-          <th width="15%">代碼</th>
-          <th width="9%">折扣</th>
-          <th width="27%">到期日</th>
-          <th width="9%">啟用</th>
-          <th>操作</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="(item) in coupons.slice((currPage-1)*itemOfPage,currPage*itemOfPage)"
-          :key="item.id"
-        >
-          <td>{{item.title}}</td>
-          <td>{{item.code}}</td>
-          <td>{{item.percent}}%</td>
-          <td>{{item.due_date}}</td>
-          <td>
-            <span class="text-success" v-if="item.is_enabled">啟用</span>
-            <span v-else>未啟用</span>
-          </td>
-          <td>
-            <button class="edit" @click="openModal(item)">編輯</button>
-            <button class="delete" @click="showAlert=true">刪除</button>
-            <div class="modal" v-show="showAlert">
-              <div>確定要刪除這個優惠券嗎?</div>
-              <button @click="removeCoupon(item)">確定</button>
-              <button @click="showAlert=false">取消</button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table">
+      <div class="table-item">
+        <div>優惠券</div>
+        <div>代碼</div>
+        <div>折扣</div>
+        <div>到期日</div>
+        <div>啟用</div>
+        <div>操作</div>
+      </div>
+      <div
+        class="table-item"
+        v-for="item in coupons.slice(
+          (currPage - 1) * itemOfPage,
+          currPage * itemOfPage
+        )"
+        :key="item.id"
+      >
+        <div>{{ item.title }}</div>
+        <div>{{ item.code }}</div>
+        <div>{{ item.percent }}%</div>
+        <div>{{ item.due_date }}</div>
+        <div>
+          <span class="text-success" v-if="item.is_enabled">啟用</span>
+          <span v-else>未啟用</span>
+        </div>
+        <div>
+          <button class="edit" @click="openModal(item)">編輯</button>
+          <button class="delete" @click="showAlert = true">刪除</button>
+          <div class="modal" v-show="showAlert">
+            <div>確定要刪除這個優惠券嗎?</div>
+            <button @click="removeCoupon(item)">確定</button>
+            <button @click="showAlert = false">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Modal -->
     <div id="modal" v-show="showModal">
@@ -91,7 +95,11 @@
           </div>
           <div class="form-group">
             <div class="form-check">
-              <input type="checkbox" id="is_enabled" v-model="tempCoupon.is_enabled" />
+              <input
+                type="checkbox"
+                id="is_enabled"
+                v-model="tempCoupon.is_enabled"
+              />
               <label for="is_enabled">是否啟用</label>
             </div>
           </div>
@@ -106,7 +114,11 @@
     <div class="modal" v-show="showAdd">新增成功</div>
     <div class="modal" v-show="showUpdate">更新成功</div>
     <!-- Pagination -->
-    <Pagination :currPage="currPage" :totalPage="totalPage" @setPage="setPage" />
+    <Pagination
+      :currPage="currPage"
+      :totalPage="totalPage"
+      @setPage="setPage"
+    />
   </div>
 </template>
 
@@ -128,19 +140,19 @@ export default {
         code: "30off",
         due_date: "2020-02-29",
         percent: 30,
-        is_enabled: true
+        is_enabled: true,
       },
-      currPage: 1
+      currPage: 1,
     };
   },
   components: {
-    Pagination
+    Pagination,
   },
   computed: {
     ...mapState(["coupons", "itemOfPage", "isLoading"]),
     totalPage() {
       return Math.ceil(this.coupons.length / this.itemOfPage);
-    }
+    },
   },
   methods: {
     handleInput(e) {
@@ -166,7 +178,7 @@ export default {
             process.env.VUE_APP_COUPONS_URL + this.tempCoupon._id,
             this.tempCoupon,
             {
-              headers: { token: this.$store.state.token }
+              headers: { token: this.$store.state.token },
             }
           );
           this.showUpdate = true;
@@ -179,7 +191,7 @@ export default {
       } else {
         try {
           await axios.post(process.env.VUE_APP_COUPONS_URL, this.tempCoupon, {
-            headers: { token: this.$store.state.token }
+            headers: { token: this.$store.state.token },
           });
           this.showAdd = true;
           setTimeout(() => {
@@ -198,7 +210,7 @@ export default {
       this.showAlert = false;
       try {
         await axios.delete(process.env.VUE_APP_COUPONS_URL + item._id, {
-          headers: { token: this.$store.state.token }
+          headers: { token: this.$store.state.token },
         });
         this.getCoupons();
         this.showDelete = true;
@@ -218,10 +230,10 @@ export default {
         this.currPage = n;
         window.scrollTo(0, 0);
       }
-    }
+    },
   },
   created() {
-    (window.onclick = e => {
+    (window.onclick = (e) => {
       if (e.target === document.getElementById("modal")) {
         this.showModal = false;
         this.tempCoupon = {};
@@ -233,7 +245,7 @@ export default {
     if (this.totalPage === 1) {
       this.currPage = 1;
     }
-  }
+  },
 };
 </script>
 

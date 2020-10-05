@@ -12,7 +12,7 @@ export default new Vuex.Store({
       },
     ],
     token: "",
-    logining: false,
+    logining: true,
     form: {
       email: "123@test.com",
       username: "123",

@@ -1,37 +1,45 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" :color="'white'" :background-color="'#17181c'"></loading>
+    <loading
+      :active.sync="isLoading"
+      :color="'white'"
+      :background-color="'#17181c'"
+    ></loading>
     <h1>Orders</h1>
-    <table>
-      <thead>
-        <tr>
-          <th width="30%">購買日期</th>
-          <th width="30%">訂單編號</th>
-          <th>是否付款</th>
-          <th>操作</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="order in sortedOrders.slice((currPage-1)*itemOfPage,currPage*itemOfPage)"
-          :key="order.id"
-        >
-          <td>{{order.date}}</td>
-          <td>{{order.id}}</td>
-          <td>
-            <span class="text-success" v-if="order.paymentStatus">已付款</span>
-            <span class="text-failure" v-else>未付款</span>
-          </td>
-          <td>
-            <router-link :to="{path:'order/'+order.id}">
-              <button class="edit">查看</button>
-            </router-link>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table">
+      <div class="table-item">
+        <div>購買日期</div>
+        <div>訂單編號</div>
+        <div>是否付款</div>
+        <div>操作</div>
+      </div>
+      <div
+        class="table-item"
+        v-for="order in sortedOrders.slice(
+          (currPage - 1) * itemOfPage,
+          currPage * itemOfPage
+        )"
+        :key="order.id"
+      >
+        <div>{{ order.date }}</div>
+        <div>{{ order.id }}</div>
+        <div>
+          <span class="text-success" v-if="order.paymentStatus">已付款</span>
+          <span class="text-failure" v-else>未付款</span>
+        </div>
+        <div>
+          <router-link :to="{ path: 'order/' + order.id }">
+            <button class="edit">查看</button>
+          </router-link>
+        </div>
+      </div>
+    </div>
     <!-- Pagination -->
-    <Pagination :currPage="currPage" :totalPage="totalPage" @setPage="setPage" />
+    <Pagination
+      :currPage="currPage"
+      :totalPage="totalPage"
+      @setPage="setPage"
+    />
   </div>
 </template>
 
@@ -41,11 +49,11 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      currPage: 1
+      currPage: 1,
     };
   },
   components: {
-    Pagination
+    Pagination,
   },
   computed: {
     ...mapState(["orders", "itemOfPage", "isLoading"]),
@@ -56,7 +64,7 @@ export default {
       var newOrders = [...this.orders];
       newOrders = newOrders.sort((a, b) => (a.date < b.date ? 1 : -1));
       return newOrders;
-    }
+    },
   },
   methods: {
     setPage(n) {
@@ -67,11 +75,11 @@ export default {
     },
     fetchOrders() {
       this.$store.dispatch("getOrders", process.env.VUE_APP_ORDERS_URL);
-    }
+    },
   },
   created() {
     this.fetchOrders();
-  }
+  },
 };
 </script>
 
