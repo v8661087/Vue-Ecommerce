@@ -27,6 +27,7 @@ Vue 電商網站，Vue CLI 4 建立開發環境，Vuex 儲存狀態容器，串�
 <li>vue-awesome-swiper</li>
 <li>vue-loading-overlay</li>
 <li>vue-lazyload</li>
+<li>vue-meta-info</li>
 </ul>
 
 # 圖片來源
