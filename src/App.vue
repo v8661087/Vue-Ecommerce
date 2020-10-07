@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <Navbar :logining="logining" :cart="cart" />
-    <router-view class="container" />
+    <keep-alive include="product,game,cart">
+      <router-view class="container" />
+    </keep-alive>
   </div>
 </template>
 <script>
@@ -26,14 +28,14 @@ export default {
     },
     fetchCoupons() {
       this.$store.dispatch("getCoupons", process.env.VUE_APP_COUPONS_URL);
-    }
+    },
   },
   created() {
     if (localStorage.getItem("cart")) {
       this.$store.state.cart = JSON.parse(localStorage.getItem("cart"));
     }
     this.fetchData();
-  }
+  },
 };
 </script>
 <style lang="scss">

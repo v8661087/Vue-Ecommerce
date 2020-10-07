@@ -15,6 +15,7 @@
         </ul>
       </div>
       <div v-show="!products.length" class="loading"></div>
+      <h2 v-show="!products.length">商品資料讀取中...</h2>
       <!-- Product -->
       <div class="products">
         <Product

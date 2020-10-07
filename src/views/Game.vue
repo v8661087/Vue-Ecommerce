@@ -2,6 +2,7 @@
   <div>
     <h1>完成翻牌配對遊戲即可獲得優惠券代碼</h1>
     <h2 v-if="clear">優惠券代碼:30off</h2>
+    <button v-if="clear" @click="refreshCards">刷新</button>
     <div class="cards">
       <Card
         v-for="(card, index) in cards"
@@ -93,6 +94,16 @@ export default {
     resetBoard() {
       [this.hasFlippedCard, this.lockBoard] = [false, false];
       [this.firstCard, this.secondCard] = [null, null];
+    },
+    refreshCards() {
+      this.clear = false;
+      this.count = 0;
+      this.resetBoard();
+      this.cards.forEach((card) => {
+        card.flipped = false;
+        card.matched = false;
+      });
+      this.randomCards(this.max);
     },
   },
   created() {
