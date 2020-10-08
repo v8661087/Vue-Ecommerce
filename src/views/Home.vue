@@ -1,22 +1,18 @@
 <template>
   <div class="home">
     <Slider />
-    <main>
-      <!-- List -->
-      <div class="type">
-        <ul>
-          <List
-            v-for="(list, index) in lists"
-            :class="{ active: list === currtype }"
-            :list="list"
-            :key="index"
-            @active="handleActive"
-          />
-        </ul>
-      </div>
-      <div v-show="!products.length" class="loading"></div>
-      <h2 v-show="!products.length">商品資料讀取中...</h2>
-      <!-- Product -->
+    <div v-show="!products.length" class="loading"></div>
+    <h2 v-show="!products.length">商品資料讀取中...</h2>
+    <main v-if="products.length">
+      <ul>
+        <List
+          v-for="(list, index) in lists"
+          :class="{ active: list === currtype }"
+          :list="list"
+          :key="index"
+          @selectType="selectType"
+        />
+      </ul>
       <div class="products">
         <Product
           v-for="product in filteredProducts.slice(
@@ -25,19 +21,16 @@
           )"
           :product="product"
           :key="product._id"
-          @add="handleAdd(product)"
+          @addToCart="addToCart(product)"
         />
       </div>
     </main>
-    <!-- Pagination -->
     <Pagination
       :currPage="currPage"
       :totalPage="totalPage"
       @setPage="setPage"
     />
-    <!-- CartDrawer -->
     <CartDrawer :cart="cart" />
-    <!-- popup -->
     <div id="popup"></div>
     <Footer />
   </div>
@@ -84,14 +77,17 @@ export default {
     Footer,
   },
   methods: {
-    handleActive(list) {
+    getProducts() {
+      this.$store.dispatch("getProducts", process.env.VUE_APP_PRODUCTS_URL);
+    },
+    selectType(list) {
       if (this.currtype !== list) {
         this.currtype = list;
         this.currPage = 1;
         this.scrollToProducts();
       }
     },
-    handleAdd(product) {
+    addToCart(product) {
       this.$store.commit("addToCart", product);
     },
     setPage(n) {
@@ -101,8 +97,9 @@ export default {
       }
     },
     scrollToProducts() {
-      const getHeight = document.getElementById("slider").scrollHeight;
-      window.scrollTo(0, getHeight);
+      const getProductsPosition = document.getElementById("slider")
+        .scrollHeight;
+      window.scrollTo(0, getProductsPosition);
     },
   },
   computed: {
@@ -118,6 +115,9 @@ export default {
     totalPage() {
       return Math.ceil(this.filteredProducts.length / this.itemOfPage);
     },
+  },
+  created() {
+    this.getProducts();
   },
 };
 </script>

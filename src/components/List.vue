@@ -1,5 +1,5 @@
 <template>
-  <li class="list-type" @click="handleActive">{{list}}</li>
+  <li class="list-type" @click="selectType">{{ list }}</li>
 </template>
 
 <script>
@@ -7,10 +7,10 @@ export default {
   name: "List",
   props: { list: String },
   methods: {
-    handleActive() {
-      this.$emit("active", this.list);
-    }
-  }
+    selectType() {
+      this.$emit("selectType", this.list);
+    },
+  },
 };
 </script>
 

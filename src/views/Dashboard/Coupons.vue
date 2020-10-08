@@ -19,26 +19,26 @@
       </div>
       <div
         class="table-item"
-        v-for="item in coupons.slice(
+        v-for="coupon in coupons.slice(
           (currPage - 1) * itemOfPage,
           currPage * itemOfPage
         )"
-        :key="item.id"
+        :key="coupon._id"
       >
-        <div>{{ item.title }}</div>
-        <div>{{ item.code }}</div>
-        <div>{{ item.percent }}%</div>
-        <div>{{ item.due_date }}</div>
+        <div>{{ coupon.title }}</div>
+        <div>{{ coupon.code }}</div>
+        <div>{{ coupon.percent }}%</div>
+        <div>{{ coupon.due_date }}</div>
         <div>
-          <span class="text-success" v-if="item.is_enabled">啟用</span>
+          <span class="text-success" v-if="coupon.is_enabled">啟用</span>
           <span v-else>未啟用</span>
         </div>
         <div>
-          <button class="edit" @click="openModal(item)">編輯</button>
-          <button class="delete" @click="showAlert = true">刪除</button>
+          <button class="edit" @click="openModal(coupon)">編輯</button>
+          <button class="delete" @click="showAlertBind(coupon)">刪除</button>
           <div class="modal" v-show="showAlert">
             <div>確定要刪除這個優惠券嗎?</div>
-            <button @click="removeCoupon(item)">確定</button>
+            <button @click="removeCoupon">確定</button>
             <button @click="showAlert = false">取消</button>
           </div>
         </div>
@@ -88,7 +88,7 @@
               id="percent"
               v-model="tempCoupon.percent"
               placeholder="請輸入折扣百分比"
-              @input="handleInput"
+              @input="changeInput"
               autocomplete="off"
               required="true"
             />
@@ -143,6 +143,7 @@ export default {
         is_enabled: true,
       },
       currPage: 1,
+      removeTempId: "",
     };
   },
   components: {
@@ -155,7 +156,7 @@ export default {
     },
   },
   methods: {
-    handleInput(e) {
+    changeInput(e) {
       this.tempCoupon.percent = e.target.value.replace(/^0|\D/g, "");
       const max = 99;
       if (this.tempCoupon.percent > max) {
@@ -169,6 +170,10 @@ export default {
     openModal(item) {
       this.showModal = true;
       this.tempCoupon = { ...item };
+    },
+    showAlertBind(coupon) {
+      this.showAlert = true;
+      this.removeTempId = coupon._id;
     },
     async updateCoupon() {
       this.$store.state.isLoading = true;
@@ -205,13 +210,16 @@ export default {
       this.getCoupons();
       this.showModal = false;
     },
-    async removeCoupon(item) {
+    async removeCoupon() {
       this.$store.state.isLoading = true;
       this.showAlert = false;
       try {
-        await axios.delete(process.env.VUE_APP_COUPONS_URL + item._id, {
-          headers: { token: this.$store.state.token },
-        });
+        await axios.delete(
+          process.env.VUE_APP_COUPONS_URL + this.removeTempId,
+          {
+            headers: { token: this.$store.state.token },
+          }
+        );
         this.getCoupons();
         this.showDelete = true;
         setTimeout(() => {
@@ -241,19 +249,10 @@ export default {
     }),
       this.getCoupons();
   },
-  updated() {
-    if (this.totalPage === 1) {
-      this.currPage = 1;
-    }
-  },
 };
 </script>
 
 <style lang="scss" scoped>
-h1 {
-  display: inline-block;
-  margin: 30px 60px;
-}
 #modal {
   position: fixed;
   z-index: 999;

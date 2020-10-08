@@ -80,7 +80,7 @@ const routes = [
         meta: { requiresAuth: true },
       },
       {
-        path: "order/:id",
+        path: "order/:_id",
         name: "order",
         component: () => import("../views/Dashboard/EditOrder.vue"),
         meta: { requiresAuth: true },
@@ -101,6 +101,7 @@ const router = new VueRouter({
   },
   routes,
 });
+
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
     if (store.state.logining) {

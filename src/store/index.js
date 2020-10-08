@@ -1,7 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+
 Vue.use(Vuex);
+
 export default new Vuex.Store({
   state: {
     isLoading: true,
@@ -12,7 +14,7 @@ export default new Vuex.Store({
       },
     ],
     token: "",
-    logining: true,
+    logining: false,
     form: {
       email: "123@test.com",
       username: "123",

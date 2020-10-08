@@ -19,7 +19,7 @@
       />
     </div>
     <h1>請填寫收件資訊</h1>
-    <form @submit.prevent="checkout">
+    <form @submit.prevent="createOrder">
       <div class="form-group">
         <label for="useremail">Email</label>
         <input
@@ -90,7 +90,7 @@
         <router-link to="/cart">
           <button class="step__primary">上一步</button>
         </router-link>
-        <button @click="handleSubmit" class="step__danger">
+        <button @click="submitForm" class="step__danger">
           下一步：完成訂單
         </button>
       </div>
@@ -124,7 +124,7 @@ export default {
     },
   },
   methods: {
-    async checkout() {
+    async createOrder() {
       function uid() {
         return Math.random().toString(36).substring(2);
       }
@@ -152,7 +152,7 @@ export default {
         this.$store.percentDiscount = null;
       }, 1000);
     },
-    handleSubmit() {
+    submitForm() {
       if (this.emailError) {
         this.$refs.emailInput.focus();
       } else {

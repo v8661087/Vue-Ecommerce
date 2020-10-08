@@ -37,11 +37,11 @@
           <router-link :to="{ path: '/dashboard/edit/' + product._id }">
             <button class="edit">編輯</button>
           </router-link>
-          <button class="delete" @click="showAlert = true">刪除</button>
+          <button class="delete" @click="showAlertBind(product)">刪除</button>
           <!-- alert -->
           <div class="modal" v-show="showAlert">
             <div>確定要刪除這個商品嗎?</div>
-            <button @click="handleDelete(product)">確定</button>
+            <button @click="deleteProduct">確定</button>
             <button @click="showAlert = false">取消</button>
           </div>
         </div>
@@ -68,6 +68,7 @@ export default {
       showAlert: false,
       showDelete: false,
       currPage: 1,
+      removeTempId: "",
     };
   },
   components: {
@@ -86,14 +87,21 @@ export default {
         window.scrollTo(0, 0);
       }
     },
-    async handleDelete(product) {
+    showAlertBind(product) {
+      this.showAlert = true;
+      this.removeTempId = product._id;
+    },
+    async deleteProduct() {
       this.$store.state.isLoading = true;
       this.showAlert = false;
       try {
-        await axios.delete(process.env.VUE_APP_PRODUCTS_URL + product._id, {
-          headers: { token: this.$store.state.token },
-        });
-        this.fetchProducts();
+        await axios.delete(
+          process.env.VUE_APP_PRODUCTS_URL + this.removeTempId,
+          {
+            headers: { token: this.$store.state.token },
+          }
+        );
+        this.getProducts();
         this.showDelete = true;
         setTimeout(() => {
           this.showDelete = false;
@@ -103,12 +111,12 @@ export default {
         this.$store.state.isLoading = false;
       }
     },
-    fetchProducts() {
+    getProducts() {
       this.$store.dispatch("getProducts", process.env.VUE_APP_PRODUCTS_URL);
     },
   },
   created() {
-    this.fetchProducts();
+    this.getProducts();
   },
   updated() {
     if (this.totalPage === 1) {

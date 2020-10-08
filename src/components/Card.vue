@@ -19,10 +19,7 @@ export default {
   props: { card: Object, lockBoard: Boolean },
   methods: {
     flipCard() {
-      if (!this.lockBoard && !this.card.matched) {
-        this.card.flipped = true;
-        this.$emit("flip", this.card);
-      }
+      this.$emit("flip", this.card);
     },
   },
 };

@@ -1,20 +1,20 @@
 <template>
   <div>
-    <div class="drawer" @click="showCartDrawer= !showCartDrawer">
+    <div class="drawer" @click="showCartDrawer = !showCartDrawer">
       <img src="../assets/cart-icon.png" alt="cart-icon" />
-      <span>{{cart.length}}</span>
+      <span>{{ cart.length }}</span>
     </div>
     <div v-show="showCartDrawer" class="drawer-items">
       <div v-if="cart.length">
         <div class="drawer-item" v-for="item of cart" :key="item._id">
           <img :src="item.src" :alt="item.name" />
-          <div class="drawer-item__name">{{item.name}}</div>
+          <div class="drawer-item__name">{{ item.name }}</div>
           <div class="drawer-item__total">
             <span>
-              <b>${{item.price}}</b>
-              * {{item.quantity}}
+              <b>${{ item.price }}</b>
+              * {{ item.quantity }}
             </span>
-            <div @click="handleDelete(item)">
+            <div @click="deleteFromCart(item)">
               <span class="delete">刪除</span>
             </div>
           </div>
@@ -37,17 +37,17 @@ export default {
   name: "CartDrawer",
   data() {
     return {
-      showCartDrawer: false
+      showCartDrawer: false,
     };
   },
   props: {
-    cart: Array
+    cart: Array,
   },
   methods: {
-    handleDelete(item) {
+    deleteFromCart(item) {
       this.$store.commit("deleteProduct", item);
-    }
-  }
+    },
+  },
 };
 </script>
 

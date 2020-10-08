@@ -1,13 +1,17 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" :color="'white'" :background-color="'#17181c'"></loading>
+    <loading
+      :active.sync="isLoading"
+      :color="'white'"
+      :background-color="'#17181c'"
+    ></loading>
     <ProductForm
       :name="name"
       :price="price"
       :remaining="remaining"
       :src="src"
       :type="type"
-      @submit="handleSubmit"
+      @submitForm="submitForm"
     />
     <div class="modal" v-show="showUpdate">更新成功</div>
   </div>
@@ -24,7 +28,7 @@ export default {
       src: "",
       remaining: "",
       type: "",
-      showUpdate: false
+      showUpdate: false,
     };
   },
   components: { ProductForm },
@@ -34,9 +38,9 @@ export default {
     },
     product() {
       return this.$store.state.products.find(
-        item => item._id == this.$route.params.id
+        (item) => item._id === this.$route.params.id
       );
-    }
+    },
   },
   mounted() {
     if (this.product) {
@@ -48,7 +52,7 @@ export default {
     }
   },
   methods: {
-    async handleSubmit(val) {
+    async submitForm(val) {
       this.name = val.name;
       this.price = val.price;
       this.remaining = val.remaining;
@@ -64,10 +68,10 @@ export default {
               price: this.price,
               remaining: this.remaining,
               src: this.src,
-              type: this.type
+              type: this.type,
             },
             {
-              headers: { token: this.$store.state.token }
+              headers: { token: this.$store.state.token },
             }
           )
           .then(() => {
@@ -82,8 +86,8 @@ export default {
         alert("此帳號無法進行操作");
         this.$store.state.isLoading = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

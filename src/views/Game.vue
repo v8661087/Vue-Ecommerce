@@ -2,7 +2,7 @@
   <div>
     <h1>完成翻牌配對遊戲即可獲得優惠券代碼</h1>
     <h2 v-if="clear">優惠券代碼:30off</h2>
-    <button v-if="clear" @click="refreshCards">刷新</button>
+    <button v-if="clear" @click="refreshCards">在玩一次</button>
     <div class="cards">
       <Card
         v-for="(card, index) in cards"
@@ -52,6 +52,8 @@ export default {
     },
     //翻開卡片
     flipCard(card) {
+      //避免已經配對成功
+      if (card.matched) return;
       // 避免翻完前點擊
       if (this.lockBoard) return;
       // 避免翻同一張牌當做第二張
@@ -60,9 +62,11 @@ export default {
       if (!this.hasFlippedCard) {
         this.hasFlippedCard = true;
         this.firstCard = card;
+        this.firstCard.flipped = true;
         return;
       }
       this.secondCard = card;
+      this.secondCard.flipped = true;
       this.checkMatch();
     },
     //檢查配對
@@ -70,7 +74,7 @@ export default {
       let isMatch = this.firstCard.num === this.secondCard.num;
       isMatch ? this.disableCards() : this.unflipedCards();
     },
-    //釋放記憶體
+    //配對成功並計算組數
     disableCards() {
       this.firstCard.matched = true;
       this.secondCard.matched = true;
@@ -96,13 +100,13 @@ export default {
       [this.firstCard, this.secondCard] = [null, null];
     },
     refreshCards() {
-      this.clear = false;
-      this.count = 0;
-      this.resetBoard();
       this.cards.forEach((card) => {
         card.flipped = false;
         card.matched = false;
       });
+      this.clear = false;
+      this.count = 0;
+      this.resetBoard();
       this.randomCards(this.max);
     },
   },

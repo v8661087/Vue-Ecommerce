@@ -1,13 +1,17 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" :color="'white'" :background-color="'#17181c'"></loading>
+    <loading
+      :active.sync="isLoading"
+      :color="'white'"
+      :background-color="'#17181c'"
+    ></loading>
     <ProductForm
       :name="name"
       :price="price"
       :remaining="remaining"
       :src="src"
       :type="type"
-      @submit="handleSubmit"
+      @submitForm="submitForm"
     />
     <div class="modal" v-show="showAdd">新增成功</div>
   </div>
@@ -25,17 +29,17 @@ export default {
       src:
         "https://tw.portal-pokemon.com/play/resources/pokedex/img/pm/ca3db4aad5c85a525d9be86852b26db1db7a22c0.png",
       type: "火 龍",
-      showAdd: false
+      showAdd: false,
     };
   },
   components: { ProductForm },
   computed: {
     isLoading() {
       return this.$store.state.isLoading;
-    }
+    },
   },
   methods: {
-    async handleSubmit(val) {
+    async submitForm(val) {
       this.name = val.name;
       this.price = val.price;
       this.remaining = val.remaining;
@@ -51,10 +55,10 @@ export default {
             quantity: 1,
             remaining: this.remaining,
             type: this.type,
-            src: this.src
+            src: this.src,
           },
           {
-            headers: { token: this.$store.state.token }
+            headers: { token: this.$store.state.token },
           }
         );
         this.showAdd = true;
@@ -68,8 +72,8 @@ export default {
         alert("此帳號無法進行操作");
         this.$store.state.isLoading = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

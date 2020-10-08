@@ -1,9 +1,13 @@
 <template>
   <div>
-    <h1>訂單編號: {{order.id}}</h1>
-    <div>日期: {{order.date}}</div>
+    <h1>訂單編號: {{ order._id }}</h1>
+    <div>日期: {{ order.date }}</div>
     <div class="cart-information">
-      <CartItem :cart="cart" :totalPrice="totalPrice" :discountPrice="discountPrice" />
+      <CartItem
+        :cart="cart"
+        :totalPrice="totalPrice"
+        :discountPrice="discountPrice"
+      />
     </div>
     <OrderForm :form="form" :paymentStatus="order.paymentStatus" />
   </div>
@@ -15,12 +19,12 @@ import OrderForm from "@/components/OrderForm.vue";
 export default {
   components: {
     CartItem,
-    OrderForm
+    OrderForm,
   },
   computed: {
     order() {
       return this.$store.state.orders.find(
-        item => item.id == this.$route.params.id
+        (item) => item._id === this.$route.params._id
       );
     },
     cart() {
@@ -34,10 +38,13 @@ export default {
     },
     form() {
       return this.order.form;
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+h1 {
+  width: 70%;
+}
 </style>

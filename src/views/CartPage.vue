@@ -24,7 +24,7 @@
         </div>
         <div class="cart-item" v-for="product of cart" :key="product.id">
           <div class="cart-item__action">
-            <span @click="handleDelete(product)">x</span>
+            <span @click="deleteProduct(product)">x</span>
           </div>
           <div class="cart-item__name">
             <img :src="product.src" :alt="product.name" />
@@ -44,7 +44,12 @@
           折扣後金額 ${{ discountPrice }}
         </div>
         <div class="coupon">
-          <input type="text" v-model="couponCode" placeholder="請輸入優惠碼" />
+          <input
+            type="text"
+            v-model="couponCode"
+            @keyup.enter="submitCoupon"
+            placeholder="請輸入優惠碼"
+          />
           <input type="button" value="套用優惠碼" @click="submitCoupon" />
         </div>
       </div>
@@ -81,7 +86,10 @@ export default {
   },
   computed: { ...mapState(["cart", "totalPrice", "discountPrice"]) },
   methods: {
-    handleDelete(product) {
+    getCoupons() {
+      this.$store.dispatch("getCoupons", process.env.VUE_APP_COUPONS_URL);
+    },
+    deleteProduct(product) {
       this.$store.commit("deleteProduct", product);
     },
     clearAll() {
@@ -118,6 +126,9 @@ export default {
         }, 1000);
       }
     },
+  },
+  created() {
+    this.getCoupons();
   },
 };
 </script>

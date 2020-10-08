@@ -43,7 +43,7 @@ export default {
   computed: {
     order() {
       return this.$store.state.orders.find(
-        (item) => item.id == this.$route.params.id
+        (item) => item.id === this.$route.params.id
       );
     },
     cart() {
@@ -67,8 +67,6 @@ export default {
       setTimeout(() => {
         this.status = true;
         axios.patch(process.env.VUE_APP_ORDERS_URL + this.order._id, {
-          cart: this.order.cart,
-          form: this.order.form,
           paymentStatus: true,
         });
       }, 500);

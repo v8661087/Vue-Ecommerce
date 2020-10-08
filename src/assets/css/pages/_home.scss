@@ -5,23 +5,18 @@
     display: flex;
     justify-content: center;
   }
-  .type {
-    max-width: 210px;
+  ul {
     width: 100%;
-    padding: 9px 0;
-    ul {
-      max-width: 150px;
-      margin: 0 auto;
-      padding: 1%;
-    }
+    max-width: 150px;
+    margin: 0 auto;
+    padding: 1%;
   }
-}
-
-.products {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  padding-bottom: 15px;
+  .products {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 15px;
+  }
 }
 
 #popup {
@@ -47,20 +42,14 @@
     main {
       display: block;
     }
-    .type {
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
       max-width: 100%;
-      width: 100%;
-      ul {
-        display: flex;
-        flex-wrap: wrap;
-        max-width: 100%;
-        margin: 0;
-        padding: 0;
-        align-items: center;
-        .list-type {
-          padding: 9px;
-          margin: 3px;
-        }
+      .list-type {
+        padding: 9px;
+        margin: 3px;
       }
     }
   }
