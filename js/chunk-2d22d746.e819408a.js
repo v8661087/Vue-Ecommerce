@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d22d746"],{f820:function(t,a,e){"use strict";e.r(a);var l=function(){var t=this,a=t.$createElement,l=t._self._c||a;return l("div",[l("h1",[t._v("Pokemon電商網站")]),l("router-link",{attrs:{to:"/"}},[l("img",{staticClass:"about-logo",attrs:{src:e("2b81"),alt:"pokeball",draggable:"false"}})]),l("h3",[t._v("此網站僅作為個人練習")]),l("h3",[t._v("預設登入帳號無法進行資料操作")])],1)},n=[],o={},s=o,r=e("2877"),u=Object(r["a"])(s,l,n,!1,null,null,null);a["default"]=u.exports}}]);
+//# sourceMappingURL=chunk-2d22d746.e819408a.js.map
